@@ -1545,6 +1545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damagePopupPrefab: {fileID: 1160820598259770611, guid: deb70a06b6f99574e9b6a1e44af19daf, type: 3}
   canvas: {fileID: 1680920882}
+  initialPoolSize: 50
 --- !u!4 &903043349
 Transform:
   m_ObjectHideFlags: 0
@@ -2241,8 +2242,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 8721016643645820127, guid: 4613bede9533d1749932f4e3a960e3d3, type: 3}
-  spawnCount: 30
-  minDistanceToPlayer: 10
+  spawnCount: 2000
+  minDistanceToPlayer: 20
   maxDistanceFromPlayer: 75
   spawnTime: 25
 --- !u!4 &1295982953
@@ -2313,7 +2314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

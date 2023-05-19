@@ -22,7 +22,7 @@ public class DamagePopup : MonoBehaviour
         text.alpha = t;
         if (t <= 0)
         {
-            Destroy(gameObject);
+            PopupManager.popupPool.Release(this);
         }
 
     }

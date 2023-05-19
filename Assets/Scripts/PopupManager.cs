@@ -1,20 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class PopupManager : MonoBehaviour
 {
     [SerializeField] DamagePopup damagePopupPrefab;
     [SerializeField] Transform canvas;
+    [SerializeField] int initialPoolSize = 50;
+    public static ObjectPool<DamagePopup> popupPool;
+
     private void OnEnable()
     {
         Enemy.OnEnemyDamaged += ShowDamagePopup;
     }
 
-
     private void OnDisable()
     {
         Enemy.OnEnemyDamaged -= ShowDamagePopup;
+    }
+
+    private void Start()
+    {
+        popupPool = new ObjectPool<DamagePopup>(CreatePopup,
+            popup => popup.gameObject.SetActive(true),
+             popup => popup.gameObject.SetActive(false),
+             null, false, 20);
+
+        for (int i = 0; i < initialPoolSize; i++)
+        {
+            popupPool.Release(CreatePopup());
+        }
     }
 
 
@@ -26,7 +42,7 @@ public class PopupManager : MonoBehaviour
     public void ShowDamagePopup(DamageData dd)
     {
         Vector2 screenPos = Camera.main.WorldToScreenPoint(dd.attacked.transform.position + (Vector3)Random.insideUnitCircle);
-        DamagePopup popup = CreatePopup();
+        DamagePopup popup = popupPool.Get();
         popup.Setup(dd.damage, screenPos);
     }
 }

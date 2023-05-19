@@ -9,6 +9,12 @@ public class Enemy : Character
     [SerializeField] float attackCooldown = 0.5f;
 
     private float nextAttackTime;
+    Transform player;
+    Transform myTranform;
+    private void Start()
+    {
+        myTranform = transform;
+    }
 
     public void Setup(int level)
     {
@@ -17,6 +23,7 @@ public class Enemy : Character
         movement.ApplySpeedBonus(new PassiveBonusInfo(level * 0.05f, IncreaseType.Additive));
         transform.localScale = Vector3.one * (1 + level * 0.1f);
     }
+
     private void OnEnable()
     {
         EnemyManager.allEnemies.Add(this);
@@ -28,15 +35,11 @@ public class Enemy : Character
 
     public void Tick()
     {
-        MoveToPlayer();
-    }
-
-    void MoveToPlayer()
-    {
-        Vector3 toPlayer = FindObjectOfType<Player>().transform.position - transform.position;
+        Vector3 toPlayer = Player.Instance.transform.position - myTranform.position;
         toPlayer.Normalize();
         movement.Move(toPlayer);
     }
+
 
     void Attack(Entity target)
     {

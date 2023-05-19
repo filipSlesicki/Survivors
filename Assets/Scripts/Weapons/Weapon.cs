@@ -60,11 +60,10 @@ public abstract class Weapon : MonoBehaviour
     {
         if(aimAtClosest)
         {
-            Enemy target = EnemyManager.GetClosestEnemy();
+            Enemy target = EnemyManager.GetClosestEnemyFromPoint(transform.position);
 
             if (target)
             {
-                Debug.Log("Aiming at " + target.gameObject.name);
                 AimWeapon(target.transform.position);
             }
         }
@@ -98,7 +97,6 @@ public abstract class Weapon : MonoBehaviour
             return;
 
         nextShootTime = Time.time + cooldown;
-        Debug.Log("Shoot");
     }
 
     public virtual void AddLevel()
