@@ -7,14 +7,8 @@ public class Enemy : Character
 {
     [SerializeField] float damage = 1;
     [SerializeField] float attackCooldown = 0.5f;
-
+    [SerializeField] float attackRange = 0.5f;
     private float nextAttackTime;
-    Transform player;
-    Transform myTranform;
-    private void Start()
-    {
-        myTranform = transform;
-    }
 
     public void Setup(int level)
     {
@@ -23,23 +17,28 @@ public class Enemy : Character
         movement.ApplySpeedBonus(new PassiveBonusInfo(level * 0.05f, IncreaseType.Additive));
         transform.localScale = Vector3.one * (1 + level * 0.1f);
     }
+    Vector2 toPlayer;
+    public void Tick(float dt)
+    {
+        toPlayer = Player.Instance.movement.lastPosition - movement.lastPosition;
 
-    private void OnEnable()
-    {
-        EnemyManager.allEnemies.Add(this);
-    }
-    private void OnDisable()
-    {
-        EnemyManager.allEnemies.Remove(this);
-    }
+        if (toPlayer.sqrMagnitude < attackRange * attackRange)
+        {
+            Attack(Player.Instance);
+        }
 
-    public void Tick()
-    {
-        Vector3 toPlayer = Player.Instance.transform.position - myTranform.position;
         toPlayer.Normalize();
-        movement.Move(toPlayer);
+        movement.SetDirection(toPlayer);
+
+
     }
 
+    public void SimpleTick(float dt)
+    { 
+        toPlayer = Player.Instance.movement.lastPosition - movement.lastPosition;
+        toPlayer.Normalize();
+        movement.SetDirection(toPlayer);
+    }
 
     void Attack(Entity target)
     {
@@ -49,18 +48,6 @@ public class Enemy : Character
         }
         target.TakeDamage(new DamageData(damage, gameObject));
         nextAttackTime = Time.time + attackCooldown;
-    }
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (!other.CompareTag("Player"))
-            return;
-
-        Entity target;
-        if( other.TryGetComponent<Entity>(out target))
-        {
-            Attack(target);
-        }
     }
 
     #region Health

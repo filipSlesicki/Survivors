@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class BasicMovement : Movement
 {
-    Transform myTranform;
-    Vector3 lastPosition;
+    Rigidbody2D rb;
     private void Start()
     {
-        myTranform = transform;
-        lastPosition = myTranform.position;
+        rb = GetComponent<Rigidbody2D>();
+        lastPosition = rb.position;
     }
-    public override void Move(Vector3 direction)
+
+    public override void SetDirection(Vector2 dir)
     {
-        lastPosition += moveSpeed * Time.deltaTime * direction;
-        myTranform.position = lastPosition;
+        rb.velocity = dir * moveSpeed;
+        lastPosition = rb.position;
+    }
+    public override void Move(Vector2 direction, float dt)
+    {
+        lastPosition += moveSpeed * dt * direction;
+        rb.MovePosition(lastPosition);
     }
 }

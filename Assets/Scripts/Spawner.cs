@@ -42,7 +42,7 @@ public class Spawner : MonoBehaviour
             Vector2 randomPos = playerPos + Random.insideUnitCircle.normalized * Random.Range(minDistanceToPlayer, maxDistanceFromPlayer);
             Enemy enemy = Instantiate(enemyPrefab, randomPos, Quaternion.identity);
             enemy.Setup(level);
-
+            EnemyManager.OnEnemySpawned(enemy);
         }
         level++;
         spawnCount += 5;

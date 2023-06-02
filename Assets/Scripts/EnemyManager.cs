@@ -4,25 +4,55 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    public static List<Enemy> allEnemies = new List<Enemy>();
+    static List<Enemy> nearbyEnemies = new List<Enemy>();
+    static List<Enemy> farEnemies = new List<Enemy>();
 
-    private void Update()
+    [SerializeField] int skipUpdatesFar = 3;
+    int frameCount;
+
+    private void OnEnable()
     {
-        int count = allEnemies.Count;
-        for (int i = 0; i < count; i++)
-        {
-            allEnemies[i].Tick();
-        }
+        Enemy.OnEnemyDead += OnEnemyDied;
+    }
 
+    private void OnDisable()
+    {
+        Enemy.OnEnemyDead -= OnEnemyDied;
+        nearbyEnemies.Clear();
+        farEnemies.Clear();
+    }
+
+
+    private void FixedUpdate()
+    {
+        frameCount++;
+        float dt = Time.deltaTime;
+
+        if (frameCount % skipUpdatesFar == 0) //Update far enemies every n frames
+        {
+            int count = farEnemies.Count;
+            for (int i = 0; i < count; i++)
+            {
+                farEnemies[i].SimpleTick(dt);
+            }
+        }
+        else //Dont update close enemies every n frames
+        {
+            int count = nearbyEnemies.Count;
+            for (int i = 0; i < count; i++)
+            {
+                nearbyEnemies[i].Tick(dt);
+            }
+        }
     }
 
     public static Enemy GetClosestEnemyFromPoint(Vector3 from)
     {
         float minDistance = float.MaxValue;
         Enemy closest = null;
-        foreach (Enemy enemy in allEnemies)
+        foreach (Enemy enemy in nearbyEnemies)
         {
-            float distance = Vector3.Distance(enemy.transform.position, from);
+            float distance = Vector2.Distance(enemy.movement.lastPosition, from);
             if (distance < minDistance)
             {
                 closest = enemy;
@@ -30,5 +60,31 @@ public class EnemyManager : MonoBehaviour
             }
         }
         return closest;
+    }
+
+    public static void OnEnemySpawned(Enemy enemy)
+    {
+        farEnemies.Add(enemy);
+    }
+
+    public static void AddNearbyEnemy(Enemy enemy)
+    {
+        nearbyEnemies.Add(enemy);
+        farEnemies.Remove(enemy);
+    }
+
+    public static void RemoveNearbyEnemy(Enemy enemy)
+    {
+        nearbyEnemies.Remove(enemy);
+        if (enemy != null && enemy.currentHealth > 0)
+        {
+            farEnemies.Add(enemy);
+        }
+    }
+
+    public void OnEnemyDied(Enemy enemy)
+    {
+        nearbyEnemies.Remove(enemy);
+        farEnemies.Remove(enemy);
     }
 }

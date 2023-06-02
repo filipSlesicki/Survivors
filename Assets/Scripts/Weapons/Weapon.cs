@@ -60,11 +60,11 @@ public abstract class Weapon : MonoBehaviour
     {
         if(aimAtClosest)
         {
-            Enemy target = EnemyManager.GetClosestEnemyFromPoint(transform.position);
+            Enemy target = EnemyManager.GetClosestEnemyFromPoint(owner.movement.lastPosition);
 
             if (target)
             {
-                AimWeapon(target.transform.position);
+                AimWeapon(target.movement.lastPosition);
             }
         }
         if(CanShoot())

@@ -36,9 +36,14 @@ public class Player : Character
 
     void Update()
     {
-        Move();
+
         attack.Tick();
         bonuses.UpdateTemporaryBonuses(Time.time);
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
     }
 
     void Move()
@@ -52,7 +57,7 @@ public class Player : Character
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
-        movement.Move(moveVector);
+        movement.SetDirection(moveVector);
     }
 
 
