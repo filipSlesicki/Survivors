@@ -8,6 +8,7 @@ public class WeaponData : SkillData
 {
     [field: SerializeField] public Weapon WeaponPrefab { get; private set; }
     [field: SerializeField] public WeaponStats BaseStats { get; private set; }
+    [field: SerializeField] public WeaponStatsData BaseStatsData { get; private set; }
     [field: SerializeField] public WeaponStats[] BonusPerLevel { get; private set; }
     public override int MaxLevel => BonusPerLevel.Length;
 

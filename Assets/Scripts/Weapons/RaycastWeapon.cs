@@ -5,7 +5,7 @@ using UnityEngine;
 public class RaycastWeapon : Weapon
 {
     [SerializeField] TrailRenderer trailPrefab;
-    public LayerMask hitLayer;
+    int hitLayer;
     float rayWidth = 0.1f;
 
     public override void Setup(WeaponData data, Character owner)
@@ -14,6 +14,19 @@ public class RaycastWeapon : Weapon
         rayWidth = data.BaseStats.Size;
         trailPrefab.startWidth = rayWidth;
         trailPrefab.endWidth = rayWidth;
+    }
+
+    protected override void SetOwner(Character owner)
+    {
+        base.SetOwner(owner);
+        if (owner is Player)
+        {
+            hitLayer = LayerMask.GetMask("Enemy");
+        }
+        else if (owner is Enemy)
+        {
+            hitLayer = LayerMask.GetMask("Player");
+        }
     }
 
     public override void Shoot()

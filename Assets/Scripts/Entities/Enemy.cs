@@ -5,11 +5,8 @@ using System;
 
 public class Enemy : Character
 {
-    [SerializeField] float damage = 1;
-    [SerializeField] float attackCooldown = 0.5f;
-    [SerializeField] float attackRange = 0.5f;
-    private float nextAttackTime;
 
+    [SerializeField] EnemyAttack attack;
     public void Setup(int level)
     {
         maxHealth *= 1 + level * 0.1f;
@@ -22,9 +19,9 @@ public class Enemy : Character
     {
         toPlayer = Player.Instance.movement.lastPosition - movement.lastPosition;
 
-        if (toPlayer.sqrMagnitude < attackRange * attackRange)
+        if (toPlayer.sqrMagnitude < attack.range * attack.range)
         {
-            Attack(Player.Instance);
+           attack.Attack(Player.Instance);
         }
 
         toPlayer.Normalize();
@@ -40,15 +37,6 @@ public class Enemy : Character
         movement.SetDirection(toPlayer);
     }
 
-    void Attack(Entity target)
-    {
-        if (Time.time < nextAttackTime)
-        {
-            return;
-        }
-        target.TakeDamage(new DamageData(damage, gameObject));
-        nextAttackTime = Time.time + attackCooldown;
-    }
 
     #region Health
     public override void TakeDamage(DamageData damageData)

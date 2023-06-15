@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] Enemy enemyPrefab;
-    [SerializeField] int spawnCount = 50;
-    [SerializeField] float minDistanceToPlayer = 5;
-    [SerializeField] float maxDistanceFromPlayer = 30;
-    [SerializeField] float spawnTime = 20;
+    [SerializeField] EnemySpawnChance[] enemies;
+    [SerializeField] SpawnerProfile profile;
     int level;
 
     private void Start()
@@ -24,28 +21,51 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    Enemy GetRandomEnemy()
+    {
+        float random = Random.Range(0, 100);
+        foreach (var enemy in enemies)
+        {
+            if(random >= enemy.chanceMin && random < enemy.chanceMax)
+            {
+                return enemy.prefab;
+            }
+        }
+        return enemies[0].prefab;
+    }
+
     IEnumerator SpawningCor()
     {
         yield return new WaitForSeconds(1);
         while(true)
         {
             SpawnEnemies();
-            yield return new WaitForSeconds(spawnTime);
+            yield return new WaitForSeconds(profile.spawnTime);
         }
     }
     void SpawnEnemies()
     {
         
         Vector2 playerPos = Player.Instance.transform.position;
-        for (int i = 0; i < spawnCount; i++)
+        for (int i = 0; i < profile.spawnCount; i++)
         {
-            Vector2 randomPos = playerPos + Random.insideUnitCircle.normalized * Random.Range(minDistanceToPlayer, maxDistanceFromPlayer);
-            Enemy enemy = Instantiate(enemyPrefab, randomPos, Quaternion.identity);
+            Vector2 randomPos = playerPos + Random.insideUnitCircle.normalized * 
+                Random.Range(profile.minDistanceToPlayer, profile.maxDistanceFromPlayer);
+            Enemy enemy = Instantiate(GetRandomEnemy(), randomPos, Quaternion.identity);
             enemy.Setup(level);
             EnemyManager.OnEnemySpawned(enemy);
         }
         level++;
-        spawnCount += 5;
+        profile.spawnCount += 5;
     }
 }
+
+[System.Serializable]
+public class EnemySpawnChance
+{
+    public Enemy prefab;
+    public float chanceMin;
+    public float chanceMax;
+}
+
 

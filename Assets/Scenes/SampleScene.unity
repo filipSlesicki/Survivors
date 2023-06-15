@@ -1778,7 +1778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponParent: {fileID: 1576725497}
-  startWeapon: {fileID: 11400000, guid: 0cfbcb8e992513c459733a29078402f4, type: 2}
+  startWeapon: {fileID: 11400000, guid: c2b8675f64372df46b2bf43b419cdf4e, type: 2}
 --- !u!4 &1056822177
 Transform:
   m_ObjectHideFlags: 0
@@ -2304,11 +2304,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9df02f08e77cc940ba10326d156cba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 8721016643645820127, guid: 4613bede9533d1749932f4e3a960e3d3, type: 3}
-  spawnCount: 3000
-  minDistanceToPlayer: 20
-  maxDistanceFromPlayer: 70
-  spawnTime: 250
+  enemies:
+  - prefab: {fileID: 8721016643645820127, guid: 4613bede9533d1749932f4e3a960e3d3, type: 3}
+    chanceMin: 0
+    chanceMax: 70
+  - prefab: {fileID: 4715264460184889288, guid: 27d01fdc1f715f143b63a21068e75ff6, type: 3}
+    chanceMin: 71
+    chanceMax: 100
+  profile: {fileID: 11400000, guid: d3d0db5ae13931c468f884c1d8943873, type: 2}
 --- !u!4 &1295982953
 Transform:
   m_ObjectHideFlags: 0
@@ -3420,7 +3423,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.44000244, y: -1.4400024}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1777559805

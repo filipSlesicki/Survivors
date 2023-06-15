@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttack : MonoBehaviour
+public abstract class EnemyAttack : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] public float range = 0.5f;
 
-    // Update is called once per frame
-    void Update()
+    public virtual void Attack(Entity target)
     {
-        
+
     }
 }

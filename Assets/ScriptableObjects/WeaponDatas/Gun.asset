@@ -22,6 +22,7 @@ MonoBehaviour:
     <Duration>k__BackingField: 0
     <CoolDown>k__BackingField: 0.4
     <Penetrating>k__BackingField: 0
+  <BaseStatsData>k__BackingField: {fileID: 0}
   <BonusPerLevel>k__BackingField:
   - <Damage>k__BackingField: 2
     <Size>k__BackingField: 0

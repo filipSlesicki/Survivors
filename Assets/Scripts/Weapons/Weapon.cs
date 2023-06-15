@@ -8,7 +8,7 @@ public abstract class Weapon : MonoBehaviour
     protected Transform[] shootPoints;
     //Current Stats
     [SerializeField]
-    protected bool aimAtClosest = true;
+    public bool aimAtClosest = true;
     [SerializeField]
     protected float range = 1;
 
@@ -43,30 +43,29 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void Setup(WeaponData data, Character owner)
     {
-        this.owner = owner;
-        aquireTime = GameTime.totalTimeInSeconds;
         this.data = data;
         damage = data.BaseStats.Damage;
-        owner.bonuses.ApplyAllBonuses(PlayerStats.Damage, ref damage);
         cooldown = data.BaseStats.CoolDown;
-        owner.bonuses.ApplyAllBonuses(PlayerStats.AttackSpeed, ref cooldown);
         penetrating = data.BaseStats.Penetrating;
         bulletCount = data.BaseStats.BulletCount;
 
-        Enemy.OnEnemyDamaged += UpdateDamageDealt;
-
+        SetOwner(owner);
     }
+
+    protected virtual void SetOwner(Character owner)
+    {
+        this.owner = owner;
+        owner.bonuses.ApplyAllBonuses(PlayerStats.Damage, ref damage);
+        owner.bonuses.ApplyAllBonuses(PlayerStats.AttackSpeed, ref cooldown);
+        if(owner is Player)
+        {
+            aquireTime = GameTime.totalTimeInSeconds;
+            Enemy.OnEnemyDamaged += UpdateDamageDealt;
+        }
+    }
+
     public void Tick()
     {
-        if(aimAtClosest)
-        {
-            Enemy target = EnemyManager.GetClosestEnemyFromPoint(owner.movement.lastPosition);
-
-            if (target)
-            {
-                AimWeapon(target.movement.lastPosition);
-            }
-        }
         if(CanShoot())
         {
             Shoot();

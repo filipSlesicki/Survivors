@@ -9,6 +9,7 @@ public class ProjectileWeapon : Weapon
     [SerializeField] float projectileSpeed = 10;
     float lifeTime;
     ObjectPool<Projectile> bulletPool;
+    int bulletLayer;
 
     private void Start()
     {
@@ -20,6 +21,26 @@ public class ProjectileWeapon : Weapon
             Projectile newProjectile = CreateProjectile();
             bulletPool.Release(newProjectile);
         }
+    }
+
+    protected override void SetOwner(Character owner)
+    {
+        base.SetOwner(owner);
+        if (owner is Player)
+        {
+            bulletLayer = LayerMask.NameToLayer("PlayerBullet");
+        }
+        else if (owner is Enemy)
+        {
+            bulletLayer = LayerMask.NameToLayer("EnemyBullet");
+        }
+        if(data.BaseStatsData != null)
+        {
+            PrjoectileWeaponStatsData projectileWeaponData = (PrjoectileWeaponStatsData)data.BaseStatsData;
+            if(projectileWeaponData!= null)
+            projectileSpeed = projectileWeaponData.BulletSpeed;
+        }
+
     }
 
     public override void Shoot()
@@ -38,6 +59,7 @@ public class ProjectileWeapon : Weapon
     {
         Projectile newProjectile = Instantiate(projectilePrefab);
         newProjectile.bulletPool = bulletPool;
+
         return newProjectile;
     }
 
@@ -45,6 +67,7 @@ public class ProjectileWeapon : Weapon
     {
         projectile.transform.localScale = Vector2.one * sizeModifier;
         projectile.gameObject.SetActive(true);
+        projectile.gameObject.layer = bulletLayer;
     }
 
     void OnReleaseProjectile(Projectile projectile)
