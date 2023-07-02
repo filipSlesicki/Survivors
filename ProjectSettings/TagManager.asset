@@ -21,8 +21,8 @@ TagManager:
   - Pickup
   - Post Process
   - 
-  - 
-  - 
+  - Unwalkable
+  - SlowTerrain
   - 
   - 
   - 
@@ -39,6 +39,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2724280611
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

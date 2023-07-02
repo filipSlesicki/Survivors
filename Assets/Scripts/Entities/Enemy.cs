@@ -24,17 +24,16 @@ public class Enemy : Character
            attack.Attack(Player.Instance);
         }
 
-        toPlayer.Normalize();
-        movement.SetDirection(toPlayer);
+        var cellUnder = GridController.curFlowField.GetCellFromWorldPos(movement.lastPosition);
+        movement.SetDirection(cellUnder.BestNormalizedDirection);
 
 
     }
 
     public void SimpleTick(float dt)
-    { 
-        toPlayer = Player.Instance.movement.lastPosition - movement.lastPosition;
-        toPlayer.Normalize();
-        movement.SetDirection(toPlayer);
+    {
+        var cellUnder = GridController.curFlowField.GetCellFromWorldPos(movement.lastPosition);
+        movement.SetDirection(cellUnder.BestNormalizedDirection);
     }
 
 

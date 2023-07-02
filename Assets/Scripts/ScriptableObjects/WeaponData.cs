@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
+using UnityEditor;
 
-[CreateAssetMenu(fileName = "New Weapon", menuName = "Weapons")]
+[CreateAssetMenu(menuName = "Weapons/BaseWeapon")]
 public class WeaponData : SkillData
 {
     [field: SerializeField] public Weapon WeaponPrefab { get; private set; }
@@ -11,6 +12,8 @@ public class WeaponData : SkillData
     [field: SerializeField] public WeaponStatsData BaseStatsData { get; private set; }
     [field: SerializeField] public WeaponStats[] BonusPerLevel { get; private set; }
     public override int MaxLevel => BonusPerLevel.Length;
+    [HideInInspector]
+    public int TestInt;
 
 
     public string GetBonusDescription(int level)
@@ -43,6 +46,34 @@ public class WeaponData : SkillData
         }
 
         return sb.ToString();
+    }
+
+#if UNITY_EDITOR
+    [MenuItem("Assets/Copy stats to scriptable")]
+    public void CopyToGunStats()
+    {
+        if(BaseStatsData == null)
+        {
+            WeaponStatsData newStatsData = ScriptableObject.CreateInstance<WeaponStatsData>();
+            string path = AssetDatabase.GetAssetPath(this);
+            path = path.Replace(".asset", "Stats.asset");
+            AssetDatabase.CreateAsset(newStatsData, path);
+
+            BaseStatsData = newStatsData;
+            //Create scriptable object
+        }
+        BaseStatsData.SetValues(BaseStats.Damage, BaseStats.Size, BaseStats.BulletCount,
+            BaseStats.Duration, BaseStats.CoolDown, BaseStats.Penetrating);
+        AssetDatabase.SaveAssets();
+    }
+#endif
+
+    public void ClearStatsData()
+    {
+        BaseStatsData = null;
+        string path = AssetDatabase.GetAssetPath(this);
+        path = path.Replace(".asset", "Stats.asset");
+        AssetDatabase.DeleteAsset(path);
     }
 
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -16,9 +17,9 @@ public class PlayerAttack : MonoBehaviour
                 {
                     weapon.AimWeapon(target.movement.lastPosition);
                 }
-
-                weapon.Tick();
             }
+
+            weapon.Tick();
         }
     }
 }
