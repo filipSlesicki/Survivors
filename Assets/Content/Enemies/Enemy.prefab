@@ -103,9 +103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   currentHealth: 0
-  OnHealthChanged:
-    m_PersistentCalls:
-      m_Calls: []
+  onDamagedEvent: {fileID: 11400000, guid: 8027cfa2e6dccf8439fba71ec26c5469, type: 2}
+  onDeathEvent: {fileID: 11400000, guid: 98047ef44388ee246b8d1361999713a5, type: 2}
   movement: {fileID: 1946347928}
   attack: {fileID: 6540571094315264684}
 --- !u!114 &1946347928

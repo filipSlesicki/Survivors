@@ -141,21 +141,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 350e1b3e4990ac14d97eb981c9b92392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 3
-  range: 10
-  aimAtClosest: 1
   shootPoints:
   - {fileID: 1616731789764428372}
   - {fileID: 3929739483732502170}
   - {fileID: 1959020409078225037}
   - {fileID: 5708039562380624134}
-  data: {fileID: 0}
-  level: 0
-  owner: {fileID: 0}
-  damageDealt: 0
-  aquireTime: 0
-  projectilePrefab: {fileID: 8316409323418192541, guid: c59c31bca4152a8459a7f20cc3bfa15b, type: 3}
-  projectileSpeed: 10
+  aimAtClosest: 1
 --- !u!1 &5723900442903111868
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class Player : Character
     public static Player Instance;
     [SerializeField] PlayerAttack attack;
 
-    public static event Action<GameObject> OnPlayerDead;
+    public FloatEvent onHealthChangedEvent;
 
     protected override void Awake()
     {
@@ -59,11 +59,24 @@ public class Player : Character
         }
         movement.SetDirection(moveVector);
     }
-
-
-    public override void Die(GameObject attacker)
+    public override void TakeDamage(DamageInfo damageInfo)
     {
-        OnPlayerDead?.Invoke(attacker);
+        base.TakeDamage(damageInfo);
+        onHealthChangedEvent.Raise(currentHealth / maxHealth);
+    }
+    public  void Heal(float amount)
+    {
+        currentHealth += amount;
+        onHealthChangedEvent.Raise(currentHealth / maxHealth);
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+    }
+
+    public override void Die(Entity attacker)
+    {
+        base.Die(attacker);
         gameObject.SetActive(false);
     }
 }

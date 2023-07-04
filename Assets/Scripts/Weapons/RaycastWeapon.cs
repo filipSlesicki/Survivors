@@ -6,14 +6,17 @@ public class RaycastWeapon : Weapon
 {
     [SerializeField] TrailRenderer trailPrefab;
     int hitLayer;
-    float rayWidth = 0.1f;
-
-    public override void Setup(WeaponData data, Character owner)
+    float range;
+    protected override void SetStats(WeaponData data)
     {
-        base.Setup(data,owner);
-        rayWidth = data.BaseStats.Size;
-        trailPrefab.startWidth = rayWidth;
-        trailPrefab.endWidth = rayWidth;
+        base.SetStats(data);
+        SetTrailWidth();
+        RaycastWeaponData raycastWeaponData = data as RaycastWeaponData;
+        if(raycastWeaponData)
+        {
+            RaycastWeaponStats raycastStats = data.Stats as RaycastWeaponStats;
+            range = raycastStats.Range;
+        }
     }
 
     protected override void SetOwner(Character owner)
@@ -32,7 +35,7 @@ public class RaycastWeapon : Weapon
     public override void Shoot()
     {
         base.Shoot();
-        if(!penetrating)
+        if(penetration == 0)
         {
             ShootSingle();
         }
@@ -46,13 +49,13 @@ public class RaycastWeapon : Weapon
     {
         for (int i = 0; i < bulletCount; i++)
         {
-            RaycastHit2D hit = Physics2D.CircleCast(shootPoints[i].position,rayWidth * sizeModifier, shootPoints[i].right, range, hitLayer);
+            RaycastHit2D hit = Physics2D.CircleCast(shootPoints[i].position, size, shootPoints[i].right, range, hitLayer);
             if (hit.collider)
             {
                 Entity hitHealth;
                 if (hit.collider.TryGetComponent<Entity>(out hitHealth))
                 {
-                    hitHealth.TakeDamage(new DamageData(damage,this));
+                    hitHealth.TakeDamage(new DamageInfo(damage, this));
                 }
 
                 TrailRenderer trail = Instantiate(trailPrefab);
@@ -71,7 +74,7 @@ public class RaycastWeapon : Weapon
     {
         for (int i = 0; i < bulletCount; i++)
         {
-            RaycastHit2D[] hits = Physics2D.CircleCastAll(shootPoints[i].position,rayWidth * sizeModifier, shootPoints[i].right, range, hitLayer);
+            RaycastHit2D[] hits = Physics2D.CircleCastAll(shootPoints[i].position, size, shootPoints[i].right, range, hitLayer);
             foreach (var hit in hits)
             {
                 Debug.Log(hit.collider.gameObject.name);
@@ -80,7 +83,7 @@ public class RaycastWeapon : Weapon
                     Entity hitHealth;
                     if (hit.collider.TryGetComponent<Entity>(out hitHealth))
                     {
-                        hitHealth.TakeDamage(new DamageData(damage, this));
+                        hitHealth.TakeDamage(new DamageInfo(damage, this));
                     }
                 }
 
@@ -89,11 +92,21 @@ public class RaycastWeapon : Weapon
         }
       
     }
+    public override void AddLevel()
+    {
+        base.AddLevel();
+    }
+
+    void SetTrailWidth()
+    {
+        trailPrefab.startWidth = size;
+        trailPrefab.endWidth = size;
+    }
 
     void ShowMaxTrail(int shotIndex)
     {
         TrailRenderer trail = Instantiate(trailPrefab);
-        trail.widthMultiplier = sizeModifier;
+        trail.widthMultiplier = size;
         trail.AddPosition(shootPoints[shotIndex].position);
         trail.transform.position = shootPoints[shotIndex].position + shootPoints[shotIndex].right * range; ;
     }

@@ -10,14 +10,9 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] int skipUpdatesFar = 3;
     int frameCount;
 
-    private void OnEnable()
-    {
-        Enemy.OnEnemyDead += OnEnemyDied;
-    }
-
     private void OnDisable()
     {
-        Enemy.OnEnemyDead -= OnEnemyDied;
+
         nearbyEnemies.Clear();
         farEnemies.Clear();
     }
@@ -82,9 +77,9 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    public void OnEnemyDied(Enemy enemy)
+    public void OnEnemyDied(DeathInfo enemyDeathInfo)
     {
-        nearbyEnemies.Remove(enemy);
-        farEnemies.Remove(enemy);
+        nearbyEnemies.Remove(enemyDeathInfo.killed as Enemy);
+        farEnemies.Remove(enemyDeathInfo.killed as Enemy);
     }
 }

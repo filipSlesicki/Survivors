@@ -6,17 +6,17 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rb;
     Weapon weapon;
-    public bool penetrating = false;
+    int penetration = 0;
     float damage;
     public ObjectPool<Projectile> bulletPool;
     float destroyTime;
 
-    public void Launch(float speed, float damage, Weapon owner, bool penetrating, float lifeTime)
+    public void Launch(float speed, float damage, Weapon owner, int penetration, float lifeTime)
     {
         this.weapon = owner;
         this.damage = damage;
         rb.velocity = transform.right * speed;
-        this.penetrating = penetrating;
+        this.penetration = penetration;
         destroyTime = Time.time + lifeTime;
     }
 
@@ -33,8 +33,9 @@ public class Projectile : MonoBehaviour
         Entity damagable;
         if(collision.TryGetComponent<Entity>(out damagable))
         {
-            damagable.TakeDamage(new DamageData(damage,weapon));
-            if(!penetrating)
+            damagable.TakeDamage(new DamageInfo(damage,weapon));
+            penetration--;
+            if(penetration <=0)
             {
                 bulletPool.Release(this);
                 return;

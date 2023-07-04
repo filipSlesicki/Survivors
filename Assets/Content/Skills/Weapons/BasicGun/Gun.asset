@@ -9,49 +9,62 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c5ec613ae308b24d910d5cb89a436cc, type: 3}
+  m_Script: {fileID: 11500000, guid: bb47229b825903f4a9dbd95188aa05d3, type: 3}
   m_Name: Gun
   m_EditorClassIdentifier: 
-  <Icon>k__BackingField: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  <Description>k__BackingField: Basic Gun
-  <WeaponPrefab>k__BackingField: {fileID: 4678561879792168168, guid: 9440afb706457424bb7884df027e67be, type: 3}
-  <BaseStats>k__BackingField:
-    <Damage>k__BackingField: 3
-    <Size>k__BackingField: 0
-    <BulletCount>k__BackingField: 1
-    <Duration>k__BackingField: 0
-    <CoolDown>k__BackingField: 0.4
-    <Penetrating>k__BackingField: 0
-  <BaseStatsData>k__BackingField: {fileID: 11400000, guid: addab17e419931549b2fe82e5ee88400, type: 2}
+  <Icon>k__BackingField: {fileID: 21300000, guid: b47e5e900aad8344f8c4b8bf0a328d3c, type: 3}
+  <Description>k__BackingField: Basic gun
   <BonusPerLevel>k__BackingField:
-  - <Damage>k__BackingField: 2
-    <Size>k__BackingField: 0
-    <BulletCount>k__BackingField: 0
-    <Duration>k__BackingField: 0
-    <CoolDown>k__BackingField: 10
-    <Penetrating>k__BackingField: 0
-  - <Damage>k__BackingField: 2
-    <Size>k__BackingField: 0.5
-    <BulletCount>k__BackingField: 0
-    <Duration>k__BackingField: 0
-    <CoolDown>k__BackingField: 10
-    <Penetrating>k__BackingField: 0
-  - <Damage>k__BackingField: 2
-    <Size>k__BackingField: 1
-    <BulletCount>k__BackingField: 0
-    <Duration>k__BackingField: 0
-    <CoolDown>k__BackingField: 10
-    <Penetrating>k__BackingField: 0
-  - <Damage>k__BackingField: 1
-    <Size>k__BackingField: 0
-    <BulletCount>k__BackingField: 1
-    <Duration>k__BackingField: 0
-    <CoolDown>k__BackingField: 10
-    <Penetrating>k__BackingField: 0
-  - <Damage>k__BackingField: 1
-    <Size>k__BackingField: 0
-    <BulletCount>k__BackingField: 0
-    <Duration>k__BackingField: 0
-    <CoolDown>k__BackingField: 50
-    <Penetrating>k__BackingField: 0
-  TestInt: 10
+  - bonuses:
+    - stat: 0
+      increaseType: 0
+      increaseValue: 1
+    - stat: 6
+      increaseType: 0
+      increaseValue: 1
+    - stat: 5
+      increaseType: 1
+      increaseValue: 2
+    - stat: 1
+      increaseType: 2
+      increaseValue: -50
+    - stat: 3
+      increaseType: 0
+      increaseValue: -1
+    - stat: 1
+      increaseType: 1
+      increaseValue: 0.5
+  - bonuses:
+    - stat: 0
+      increaseType: 0
+      increaseValue: 1
+    - stat: 6
+      increaseType: 0
+      increaseValue: 1
+    - stat: 5
+      increaseType: 1
+      increaseValue: 2
+    - stat: 1
+      increaseType: 2
+      increaseValue: -50
+    - stat: 3
+      increaseType: 0
+      increaseValue: -1
+  - bonuses:
+    - stat: 0
+      increaseType: 0
+      increaseValue: 1
+    - stat: 6
+      increaseType: 0
+      increaseValue: 1
+    - stat: 5
+      increaseType: 1
+      increaseValue: 2
+    - stat: 1
+      increaseType: 2
+      increaseValue: -50
+    - stat: 3
+      increaseType: 0
+      increaseValue: -1
+  <stats>k__BackingField: {fileID: 11400000, guid: a767bc5b1b365af4280141c762ddcbf1, type: 2}
+  <weaponPrefab>k__BackingField: {fileID: 4678561879792168168, guid: 9440afb706457424bb7884df027e67be, type: 3}

@@ -9,14 +9,16 @@ public abstract class Weapon : MonoBehaviour
     //Current Stats
     [SerializeField]
     public bool aimAtClosest = true;
-    [SerializeField]
-    protected float range = 1;
 
-    protected float cooldown;
-    protected float damage;
-    protected bool penetrating;
-    protected float sizeModifier = 1;
-    protected int bulletCount =1;
+    protected Dictionary<WeaponStatType, float> stats = new Dictionary<WeaponStatType, float>();
+    protected float damage { get { return stats[WeaponStatType.Damage]; } set { stats[WeaponStatType.Damage] = value; } }
+    protected float cooldown { get { return stats[WeaponStatType.CoolDown]; } set { stats[WeaponStatType.CoolDown] = value; } }
+    protected float bulletCount { get { return stats[WeaponStatType.BulletCount]; } set { stats[WeaponStatType.BulletCount] = value; } }
+    protected float duration { get { return stats[WeaponStatType.Duration]; } set { stats[WeaponStatType.Duration] = value; } }
+    protected float size { get { return stats[WeaponStatType.Size]; } set { stats[WeaponStatType.Size] = value; } }
+    protected int penetration { get { return (int)stats[WeaponStatType.Penetration]; } set { stats[WeaponStatType.Penetration] = value; } }
+
+
     public int level { get; private set; }
 
     public int displayLevel { get { return level + 1; } }
@@ -30,10 +32,10 @@ public abstract class Weapon : MonoBehaviour
 
     private void OnDisable()
     {
-        Enemy.OnEnemyDamaged -= UpdateDamageDealt;
+        //Enemy.OnEnemyDamaged -= UpdateDamageDealt;
     }
 
-    void UpdateDamageDealt(DamageData dd)
+    void UpdateDamageDealt(DamageInfo dd)
     {
         if(dd.weapon == this)
         {
@@ -41,26 +43,32 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
-    public virtual void Setup(WeaponData data, Character owner)
+    public void Setup(WeaponData data, Character owner)
     {
         this.data = data;
-        damage = data.BaseStats.Damage;
-        cooldown = data.BaseStats.CoolDown;
-        penetrating = data.BaseStats.Penetrating;
-        bulletCount = data.BaseStats.BulletCount;
-
+        SetStats(data);
         SetOwner(owner);
+    }
+
+    protected virtual void SetStats(WeaponData data)
+    {
+        stats[WeaponStatType.Damage] = data.Stats.Damage;
+        stats[WeaponStatType.CoolDown] = data.Stats.CoolDown;
+        stats[WeaponStatType.Penetration] = data.Stats.Penetration;
+        stats[WeaponStatType.BulletCount] = data.Stats.BulletCount;
+        stats[WeaponStatType.Duration] = data.Stats.Duration;
+        stats[WeaponStatType.Size] = data.Stats.Size;
     }
 
     protected virtual void SetOwner(Character owner)
     {
         this.owner = owner;
-        owner.bonuses.ApplyAllBonuses(PlayerStats.Damage, ref damage);
-        owner.bonuses.ApplyAllBonuses(PlayerStats.AttackSpeed, ref cooldown);
+        //owner.bonuses.ApplyAllBonuses(CharacterStats.Damage, ref damage);
+        //owner.bonuses.ApplyAllBonuses(CharacterStats.AttackSpeed, ref cooldown);
         if(owner is Player)
         {
             aquireTime = GameTime.totalTimeInSeconds;
-            Enemy.OnEnemyDamaged += UpdateDamageDealt;
+            //Enemy.OnEnemyDamaged += UpdateDamageDealt;
         }
     }
 
@@ -100,14 +108,12 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void AddLevel()
     {
-        WeaponStats bonus = data.BonusPerLevel[level];
-        damage += bonus.Damage;
-        sizeModifier += bonus.Size;
-        bulletCount += bonus.BulletCount;
-        cooldown *= (1- bonus.CoolDown*0.01f);
-        if(bonus.Penetrating)
+        WeaponBonusPerLevel allBonuses = data.BonusPerLevel[level];
+        foreach (var bonus in allBonuses.bonuses)
         {
-            penetrating = true;
+            float currentValue = stats[bonus.stat];
+            Bonuses.ApplyBonusToValue(ref currentValue, bonus.increaseType, bonus.increaseValue);
+            stats[bonus.stat] = currentValue;
         }
         level++;
     }

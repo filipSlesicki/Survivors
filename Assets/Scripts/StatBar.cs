@@ -16,8 +16,8 @@ public class StatBar : MonoBehaviour
         else
             bar.fillAmount = 0;
     }
-    public void SetValue(float current,float max)
+    public void SetValue(float valuePercentage)
     {
-        bar.fillAmount = (float)current/max;
+        bar.fillAmount = valuePercentage;
     }
 }

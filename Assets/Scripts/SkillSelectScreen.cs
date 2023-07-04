@@ -17,13 +17,11 @@ public class SkillSelectScreen : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerLevel.OnLevelUp += ShowSkillsToSelect;
         PlayerSkills.OnSkillSelected += OnSkillSelected;
     }
 
     private void OnDisable()
     {
-        PlayerLevel.OnLevelUp -= ShowSkillsToSelect;
         PlayerSkills.OnSkillSelected -= OnSkillSelected;
     }
 

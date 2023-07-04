@@ -12,20 +12,10 @@ public class EndGameStats : MonoBehaviour
     public Transform weaponStatsParent;
     public WeaponEndGameStatsUI weaponStatsUIPrefab;
 
-    private void OnEnable()
-    {
-        Player.OnPlayerDead += ShowGameOverScreen;
-    }
-
-    private void OnDisable()
-    {
-        Player.OnPlayerDead -= ShowGameOverScreen;
-    }
-
-    void ShowGameOverScreen(GameObject killer)
+    public void ShowGameOverScreen(DeathInfo deathInfo)
     {
         Time.timeScale = 0;
-        killerText.text = "Killed by "+ killer.name;
+        killerText.text = "Killed by "+ deathInfo.killer.name;
         timeText.text = "Survived " + GameTime.GetTimeString();
         endGameScreen.SetActive(true);
         var weapons = PlayerSkills.Instance.weapons.Values;

@@ -17,7 +17,7 @@ public class MeeleAttack : EnemyAttack
             return;
         }
         nextAttackTime = Time.time + attackCooldown;
-
-        target.TakeDamage(new DamageData(damage, gameObject));
+        //Todo: Fix
+        target.TakeDamage(new DamageInfo(damage, GetComponent<Entity>()));
     }
 }

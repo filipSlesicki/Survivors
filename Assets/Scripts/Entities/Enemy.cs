@@ -38,21 +38,12 @@ public class Enemy : Character
 
 
     #region Health
-    public override void TakeDamage(DamageData damageData)
-    {
-        damageData.attacked = gameObject;
 
-        OnEnemyDamaged?.Invoke(damageData);
-        base.TakeDamage(damageData);
-    }
-
-    public override void Die(GameObject killer)
+    public override void Die(Entity killer)
     {
-        OnEnemyDead?.Invoke(this);
+        base.Die(killer);
         Destroy(gameObject);
     }
     #endregion
 
-    public static event Action<DamageData> OnEnemyDamaged;
-    public static event Action<Enemy> OnEnemyDead;
 }

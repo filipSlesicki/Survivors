@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class GameEvent : ScriptableObject
+public abstract class GameEvent<T> : ScriptableObject
 {
-    private readonly List<GameEventListener> listeners = new List<GameEventListener>();
+    private readonly List<IGameEventListener<T>> listeners = new List<IGameEventListener<T>>();
 
-    public void Raise()
+    public void Raise(T data)
     {
         int count = listeners.Count;
         for (int i = 0; i < count; i++)
         {
-            listeners[i].OnEventRaised();
+            listeners[i].OnEventRaised(data);
         }
     }
 
-    public void RegisterListener(GameEventListener newListener)
+    public void RegisterListener(IGameEventListener<T> newListener)
     {
         if(!listeners.Contains(newListener))
         {
@@ -24,7 +23,7 @@ public class GameEvent : ScriptableObject
         }
     }
 
-    public void UnregisterListener(GameEventListener listener)
+    public void UnregisterListener(IGameEventListener<T> listener)
     {
         listeners.Remove(listener);
     }

@@ -13,16 +13,16 @@ public class Character : Entity
         base.Awake();
         bonuses = new Bonuses();
     }
-    protected void HandleBonusGain(PlayerStats stat, PassiveBonusInfo bonus)
+    protected void HandleBonusGain(CharacterStats stat, PassiveBonusInfo bonus)
     {
         switch (stat)
         {
-            case PlayerStats.Health:
+            case CharacterStats.Health:
                 Bonuses.ApplyBonusToValue(ref maxHealth, bonus);
                 Bonuses.ApplyBonusToValue(ref currentHealth, bonus);
-                OnHealthChanged?.Invoke(currentHealth, maxHealth);
+                //OnHealthChanged?.Invoke(currentHealth, maxHealth);
                 break;
-            case PlayerStats.Speed:
+            case CharacterStats.Speed:
                 movement.ApplySpeedBonus(bonus);
                 break;
             default:
@@ -30,7 +30,7 @@ public class Character : Entity
         }
     }
 
-    protected void HandleBonusLost(PlayerStats stat, PassiveBonusInfo bonus)
+    protected void HandleBonusLost(CharacterStats stat, PassiveBonusInfo bonus)
     {
 
     }

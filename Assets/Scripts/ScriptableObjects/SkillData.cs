@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class SkillData : ScriptableObject
+public abstract class SkillData : ScriptableObject
 {
     [field: SerializeField] public Sprite Icon { get; private set; }
     [field: SerializeField] public string Description { get; private set; }

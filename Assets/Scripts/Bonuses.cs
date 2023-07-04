@@ -5,9 +5,9 @@ using System;
 
 public class Bonuses
 {
-    Dictionary<PlayerStats,List<PassiveBonusInfo>> passiveBonuses = new Dictionary<PlayerStats, List<PassiveBonusInfo>>();
-    public event Action<PlayerStats, PassiveBonusInfo> OnBonusGained;
-    public event Action<PlayerStats, PassiveBonusInfo> OnBonusLost;
+    Dictionary<CharacterStats,List<PassiveBonusInfo>> passiveBonuses = new Dictionary<CharacterStats, List<PassiveBonusInfo>>();
+    public event Action<CharacterStats, PassiveBonusInfo> OnBonusGained;
+    public event Action<CharacterStats, PassiveBonusInfo> OnBonusLost;
 
     //public Bonuses()
     //{
@@ -17,7 +17,8 @@ public class Bonuses
     //    }
     //}
 
-    public void AddBonus(PlayerStats stat, PassiveBonusInfo bonusInfo)
+
+    public void AddBonus(CharacterStats stat, PassiveBonusInfo bonusInfo)
     {
         if(!passiveBonuses.ContainsKey(stat))
         {
@@ -47,36 +48,44 @@ public class Bonuses
         }
     }
 
-    public void ApplyAllBonuses(PlayerStats stat,ref float baseValue)
+    public void ApplyAllBonuses(CharacterStats stat,ref float baseValue)
     {
         if (!passiveBonuses.ContainsKey(stat))
             return;
 
         foreach (var bonus in passiveBonuses[stat])
         {
-            ApplyBonusToValue(ref baseValue, bonus);
+            ApplyBonusToValue(ref baseValue, bonus.increaseType,bonus.value);
         }
     }
 
-    public static void ApplyBonusToValue(ref float baseValue, PassiveBonusInfo bonusInfo)
+    public static void ApplyBonusToValue(ref float baseValue, IncreaseType increaseType, float increaseValue)
     {
-        switch (bonusInfo.increaseType)
+        switch (increaseType)
         {
             case IncreaseType.Additive:
-                baseValue += bonusInfo.value;
+                baseValue += increaseValue;
                 break;
             case IncreaseType.Multiplicative:
-                baseValue *= bonusInfo.value;
+                baseValue *= increaseValue;
                 break;
             case IncreaseType.AddPercent:
-                baseValue *= 1 + bonusInfo.value / 100;
+                baseValue *= 1 + increaseValue / 100;
+                break;
+            case IncreaseType.Set:
+                baseValue = increaseValue;
                 break;
             default:
                 break;
         }
     }
 
-    void RemoveBonus(PlayerStats stat, PassiveBonusInfo bonusInfo)
+    public static void ApplyBonusToValue(ref float baseValue, PassiveBonusInfo bonus)
+    {
+        ApplyBonusToValue(ref baseValue, bonus.increaseType, bonus.value);
+    }
+
+    void RemoveBonus(CharacterStats stat, PassiveBonusInfo bonusInfo)
     {
         if(!passiveBonuses.ContainsKey(stat))
         {

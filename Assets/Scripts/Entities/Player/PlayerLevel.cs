@@ -7,8 +7,8 @@ using UnityEngine.Events;
 public class PlayerLevel : MonoBehaviour
 {
     [SerializeField] ExpValues expValues;
-    public UnityEvent<float, float> OnExpGained;
-    public static event Action<int> OnLevelUp;
+    public FloatEvent onExpGainedEvent;
+    public IntEvent OnLevelUpEvent;
 
     public static PlayerLevel Instance;
     int exp;
@@ -33,13 +33,13 @@ public class PlayerLevel : MonoBehaviour
         {
             LevelUp();
         }
-        OnExpGained?.Invoke(exp, expValues.expPerLevel[level]);
+        onExpGainedEvent.Raise(exp/ expValues.expPerLevel[level]);
     }
 
     void LevelUp()
     {
         exp -= expValues.expPerLevel[level];
         level++;
-        OnLevelUp(level);
+        OnLevelUpEvent.Raise(level);
     }
 }

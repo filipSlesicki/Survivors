@@ -103,9 +103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   currentHealth: 0
-  OnHealthChanged:
-    m_PersistentCalls:
-      m_Calls: []
+  onDamagedEvent: {fileID: 11400000, guid: 8027cfa2e6dccf8439fba71ec26c5469, type: 2}
+  onDeathEvent: {fileID: 11400000, guid: 98047ef44388ee246b8d1361999713a5, type: 2}
   movement: {fileID: 4064703607790731919}
   attack: {fileID: 829284523930762578}
 --- !u!114 &4064703607790731919
@@ -132,6 +131,25 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -155,6 +173,12 @@ Rigidbody2D:
   m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -172,5 +196,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 10
-  weaponData: {fileID: 11400000, guid: 2e95076aa7ba38c4fb0682f3ac3a17fb, type: 2}
+  weaponData: {fileID: 11400000, guid: 070fdc37b231a6e4dbdea5128fdc3e68, type: 2}
   weaponParent: {fileID: 1310292841785746729}

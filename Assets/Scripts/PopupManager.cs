@@ -10,15 +10,6 @@ public class PopupManager : MonoBehaviour
     [SerializeField] int initialPoolSize = 50;
     public static ObjectPool<DamagePopup> popupPool;
 
-    private void OnEnable()
-    {
-        Enemy.OnEnemyDamaged += ShowDamagePopup;
-    }
-
-    private void OnDisable()
-    {
-        Enemy.OnEnemyDamaged -= ShowDamagePopup;
-    }
 
     private void Start()
     {
@@ -39,10 +30,10 @@ public class PopupManager : MonoBehaviour
         return Instantiate(damagePopupPrefab, canvas);
     }
 
-    public void ShowDamagePopup(DamageData dd)
+    public void ShowDamagePopup(DamageInfo di)
     {
-        Vector2 screenPos = Camera.main.WorldToScreenPoint(dd.attacked.transform.position + (Vector3)Random.insideUnitCircle);
+        Vector2 screenPos = Camera.main.WorldToScreenPoint(di.attacked.transform.position + (Vector3)Random.insideUnitCircle);
         DamagePopup popup = popupPool.Get();
-        popup.Setup(dd.damage, screenPos);
+        popup.Setup(di.damage, screenPos);
     }
 }

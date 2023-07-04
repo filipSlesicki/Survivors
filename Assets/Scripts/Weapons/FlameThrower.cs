@@ -7,20 +7,19 @@ public class FlameThrower : Weapon
     [SerializeField] GameObject[] flames;
     [SerializeField] float damageCooldown = 0.1f;
     List<Entity> targetsInRange = new List<Entity>();
-
-    float duration;
+    protected float range { get { return stats[WeaponStatType.Range]; } set { stats[WeaponStatType.Range] = value; } }
     float nextDamageTime;
     float deactivateTime;
 
-    public override void Setup(WeaponData data,Character owner)
-    {
-        base.Setup(data,owner);
-        duration = data.BaseStats.Duration;
-    }
     public override void Shoot()
     {
         base.Shoot();
         ActivateFlames();
+    }
+    protected override void SetStats(WeaponData data)
+    {
+        base.SetStats(data);
+        stats[WeaponStatType.Range] = 1;
     }
 
     protected override void AdditionalUpdate()
@@ -41,7 +40,7 @@ public class FlameThrower : Weapon
     {
         foreach (var target in targetsInRange)
         {
-            target.TakeDamage(new DamageData(damage, this));
+            target.TakeDamage(new DamageInfo(damage, this));
         }
     }
 
@@ -77,18 +76,16 @@ public class FlameThrower : Weapon
     public override void AddLevel()
     {
         base.AddLevel();
-        WeaponStats bonus = data.BonusPerLevel[level -1];
-        if (bonus.Size > 0)
+        if (size > 0)
         {
+          
             foreach (var flame in flames)
             {
-                flame.transform.localScale = Vector2.one * sizeModifier;
+                Vector2 totalSize = new Vector2(range, size);
+                flame.transform.localScale = totalSize;
             }
         }
-        if (bonus.Duration > 0)
-        {
-            duration += duration;
-        }
+
 
 
     }

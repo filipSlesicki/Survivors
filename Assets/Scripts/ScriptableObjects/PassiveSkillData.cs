@@ -6,7 +6,7 @@ using UnityEngine;
 public class PassiveSkillData : SkillData
 {
     [field: SerializeField] public int _MaxLevel { get; private set; }
-    [field: SerializeField] public PlayerStats Stat { get; private set; }
+    [field: SerializeField] public CharacterStats Stat { get; private set; }
     [field: SerializeField] public IncreaseType IncreaseType { get; private set; }
     [field: SerializeField] public float IncreasePerLevel { get; private set; }
     public override int MaxLevel => _MaxLevel;

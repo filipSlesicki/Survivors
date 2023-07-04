@@ -8,34 +8,30 @@ public class Entity : MonoBehaviour
     public float maxHealth;
     public float currentHealth;
 
-    public UnityEvent<float, float> OnHealthChanged;
+    public DamageInfoEvent onDamagedEvent;
+    public DeathInfoEvent onDeathEvent;
+
     protected virtual void Awake()
     {
         currentHealth = maxHealth;
     }
 
-    public virtual void TakeDamage(DamageData damageData)
+    public virtual void TakeDamage(DamageInfo damageInfo)
     {
-        currentHealth -= damageData.damage;
-        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        currentHealth -= damageInfo.damage;
+        damageInfo.attacked = this;
+        onDamagedEvent.Raise(damageInfo);
         if (currentHealth <= 0)
         {
-            Die(damageData.attacker);
+            Die(damageInfo.attacker);
         }
     }
 
-    public virtual void Heal(float amount)
-    {
-        currentHealth += amount;
-        OnHealthChanged?.Invoke(currentHealth, maxHealth);
-        if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-    }
 
-    public virtual void Die(GameObject attacker)
+
+    public virtual void Die(Entity killer)
     {
+        onDeathEvent.Raise(new DeathInfo(this, killer));
     }
 
 }

@@ -5,16 +5,27 @@ using UnityEngine.Pool;
 
 public class ProjectileWeapon : Weapon
 {
-    [SerializeField] Projectile projectilePrefab;
-    [SerializeField] float projectileSpeed = 10;
-    float lifeTime;
+    Projectile projectilePrefab;
+    protected float projectileSpeed { get { return stats[WeaponStatType.BulletSpeed]; } set { stats[WeaponStatType.BulletSpeed] = value; } }
     ObjectPool<Projectile> bulletPool;
+
     int bulletLayer;
 
-    private void Start()
+    protected override void SetStats(WeaponData data)
     {
-        lifeTime = range / projectileSpeed;
-        bulletPool = new ObjectPool<Projectile>(CreateProjectile,OnGetPrjectile,OnReleaseProjectile,null,false,30);
+        base.SetStats(data);
+        ProjectileWeaponData projectileData = data as ProjectileWeaponData;
+        if (projectileData != null)
+        {
+            ProjectileWeaponStats projectileStats = data.Stats as ProjectileWeaponStats;
+            projectilePrefab = projectileStats.BulletPrefab;
+            stats[WeaponStatType.BulletSpeed] = projectileStats.BulletSpeed;
+        }
+        else
+        {
+            Debug.LogError("Wrong weapon data");
+        }
+        bulletPool = new ObjectPool<Projectile>(CreateProjectile, OnGetPrjectile, OnReleaseProjectile, null, false, 30);
 
         for (int i = 0; i < 10; i++)
         {
@@ -34,13 +45,6 @@ public class ProjectileWeapon : Weapon
         {
             bulletLayer = LayerMask.NameToLayer("EnemyBullet");
         }
-        if(data.BaseStatsData != null)
-        {
-            PrjoectileWeaponStatsData projectileWeaponData = (PrjoectileWeaponStatsData)data.BaseStatsData;
-            if(projectileWeaponData!= null)
-            projectileSpeed = projectileWeaponData.BulletSpeed;
-        }
-
     }
 
     public override void Shoot()
@@ -49,7 +53,7 @@ public class ProjectileWeapon : Weapon
         {
             Projectile projectile = bulletPool.Get();
             projectile.transform.SetPositionAndRotation(shootPoints[i].position, shootPoints[i].rotation);
-            projectile.Launch(projectileSpeed, damage, this, penetrating, lifeTime);
+            projectile.Launch(projectileSpeed, damage, this,penetration,duration);
         }
       
         base.Shoot();
@@ -65,7 +69,7 @@ public class ProjectileWeapon : Weapon
 
     void OnGetPrjectile(Projectile projectile)
     {
-        projectile.transform.localScale = Vector2.one * sizeModifier;
+        projectile.transform.localScale = Vector2.one * size;
         projectile.gameObject.SetActive(true);
         projectile.gameObject.layer = bulletLayer;
     }
@@ -73,18 +77,6 @@ public class ProjectileWeapon : Weapon
     void OnReleaseProjectile(Projectile projectile)
     {
         projectile.gameObject.SetActive(false);
-    }
-
-
-    public override void AddLevel()
-    {
-        WeaponStats bonus = data.BonusPerLevel[level];
-        if (bonus.Duration > 0)
-        {
-            lifeTime += bonus.Duration;
-        }
-        base.AddLevel();
-
     }
 
 }

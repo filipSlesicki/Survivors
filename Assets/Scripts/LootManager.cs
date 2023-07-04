@@ -5,18 +5,9 @@ using UnityEngine;
 public class LootManager : MonoBehaviour
 {
     [SerializeField]GameObject expPickup;
-    private void OnEnable()
-    {
-        Enemy.OnEnemyDead += SpawnLoot;
-    }
 
-    private void OnDisable()
+    public void SpawnLoot(DeathInfo enemyDeathInfo)
     {
-        Enemy.OnEnemyDead -= SpawnLoot;
-    }
-
-    void SpawnLoot(Enemy e)
-    {
-        Instantiate(expPickup, e.transform.position, Quaternion.identity);
+        Instantiate(expPickup, enemyDeathInfo.killed.transform.position, Quaternion.identity);
     }
 }

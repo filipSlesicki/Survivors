@@ -1532,6 +1532,7 @@ GameObject:
   - component: {fileID: 695767970}
   - component: {fileID: 695767973}
   - component: {fileID: 695767971}
+  - component: {fileID: 695767974}
   m_Layer: 5
   m_Name: ExpBar
   m_TagString: Untagged
@@ -1582,6 +1583,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 695767969}
   m_CullTransparentMesh: 1
+--- !u!114 &695767974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695767969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06badc946dd8dbc46bb9b935886bf283, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: cdd6f231cc6340248bbe65c0db96b99a, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 695767971}
+        m_TargetAssemblyTypeName: StatBar, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &713018198
 GameObject:
   m_ObjectHideFlags: 0
@@ -1900,6 +1929,7 @@ GameObject:
   - component: {fileID: 888130099}
   - component: {fileID: 888130102}
   - component: {fileID: 888130100}
+  - component: {fileID: 888130103}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -1950,6 +1980,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 888130098}
   m_CullTransparentMesh: 1
+--- !u!114 &888130103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888130098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06badc946dd8dbc46bb9b935886bf283, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 5d2bb946226631148823790017f249ea, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 888130100}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &903043347
 GameObject:
   m_ObjectHideFlags: 0
@@ -1960,6 +2018,7 @@ GameObject:
   m_Component:
   - component: {fileID: 903043349}
   - component: {fileID: 903043348}
+  - component: {fileID: 903043350}
   m_Layer: 0
   m_Name: PopupManager
   m_TagString: Untagged
@@ -1997,6 +2056,34 @@ Transform:
   m_Father: {fileID: 1666974724}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &903043350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 903043347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0844ec0295cd4984990b21d8e29be8f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 8027cfa2e6dccf8439fba71ec26c5469, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 903043348}
+        m_TargetAssemblyTypeName: PopupManager, Assembly-CSharp
+        m_MethodName: ShowDamagePopup
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &907313859
 GameObject:
   m_ObjectHideFlags: 0
@@ -2154,7 +2241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponParent: {fileID: 1576725497}
-  startWeapon: {fileID: 11400000, guid: 2bfcf76c8a47c4c438a28b1f8307b513, type: 2}
+  startWeapon: {fileID: 11400000, guid: 0cfbcb8e992513c459733a29078402f4, type: 2}
 --- !u!4 &1056822177
 Transform:
   m_ObjectHideFlags: 0
@@ -2269,35 +2356,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
-  OnHealthChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 888130100}
-        m_TargetAssemblyTypeName: StatBar, Assembly-CSharp
-        m_MethodName: SetValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1777559805}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Show
-          m_BoolArgument: 0
-        m_CallState: 2
+  onDamagedEvent: {fileID: 11400000, guid: 9abddda6a8b133d46ae57b0bae958e77, type: 2}
+  onDeathEvent: {fileID: 11400000, guid: 756f1d8e70415c7498630a7f4f60fe18, type: 2}
   movement: {fileID: 1056822181}
   attack: {fileID: 1056822183}
+  onHealthChangedEvent: {fileID: 0}
 --- !u!70 &1056822180
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2399,21 +2462,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   expValues: {fileID: 11400000, guid: 65466b22bcff6554e9b74005ce8ea196, type: 2}
-  OnExpGained:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 695767971}
-        m_TargetAssemblyTypeName: StatBar, Assembly-CSharp
-        m_MethodName: SetValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  onExpGainedEvent: {fileID: 11400000, guid: cdd6f231cc6340248bbe65c0db96b99a, type: 2}
+  OnLevelUpEvent: {fileID: 11400000, guid: f3c8c1bb49106754c854108d917008d3, type: 2}
 --- !u!114 &1056822185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2659,6 +2709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1231432885}
   - component: {fileID: 1231432886}
+  - component: {fileID: 1231432887}
   m_Layer: 0
   m_Name: EndGameStats
   m_TagString: Untagged
@@ -2698,6 +2749,34 @@ MonoBehaviour:
   timeText: {fileID: 203184391}
   weaponStatsParent: {fileID: 1482609262}
   weaponStatsUIPrefab: {fileID: 8941852543141904892, guid: 8e7c6421856d2d34f98ebce3bd46812d, type: 3}
+--- !u!114 &1231432887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231432884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1db1de700c26ab4baea19be2b2aad68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 756f1d8e70415c7498630a7f4f60fe18, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1231432886}
+        m_TargetAssemblyTypeName: EndGameStats, Assembly-CSharp
+        m_MethodName: ShowGameOverScreen
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1254768932
 GameObject:
   m_ObjectHideFlags: 0
@@ -2708,6 +2787,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1254768933}
   - component: {fileID: 1254768934}
+  - component: {fileID: 1254768935}
   m_Layer: 0
   m_Name: SkillSelect
   m_TagString: Untagged
@@ -2744,17 +2824,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allSkills:
   - {fileID: 11400000, guid: 0cfbcb8e992513c459733a29078402f4, type: 2}
-  - {fileID: 11400000, guid: adb64eab7de452a47a4ebef17e4fc193, type: 2}
-  - {fileID: 11400000, guid: c2b8675f64372df46b2bf43b419cdf4e, type: 2}
-  - {fileID: 11400000, guid: 2bfcf76c8a47c4c438a28b1f8307b513, type: 2}
-  - {fileID: 11400000, guid: 305c4d393a8bd3741bdf078a332eb02d, type: 2}
-  - {fileID: 11400000, guid: acb7f3e97dee5314bb289a6ae0bd7fae, type: 2}
   - {fileID: 11400000, guid: 0f3a75fdea94e79489c3603367351ecf, type: 2}
+  - {fileID: 11400000, guid: acb7f3e97dee5314bb289a6ae0bd7fae, type: 2}
+  - {fileID: 11400000, guid: 305c4d393a8bd3741bdf078a332eb02d, type: 2}
+  - {fileID: 11400000, guid: 48ad65e180b660d429ebe1ef544c0995, type: 2}
+  - {fileID: 11400000, guid: 1ebafe1bcdf83db49b99302875e2b094, type: 2}
   skillSelectScreen: {fileID: 907313859}
   skillSelectButtons:
   - {fileID: 1629312325}
   - {fileID: 819754136}
   - {fileID: 2084759469}
+--- !u!114 &1254768935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254768932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906424d095c96b64da17b6d854fb2f0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: f3c8c1bb49106754c854108d917008d3, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1254768934}
+        m_TargetAssemblyTypeName: SkillSelectScreen, Assembly-CSharp
+        m_MethodName: ShowSkillsToSelect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1295982951
 GameObject:
   m_ObjectHideFlags: 0
@@ -3802,6 +3909,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1603865723}
   - component: {fileID: 1603865724}
+  - component: {fileID: 1603865725}
   m_Layer: 0
   m_Name: LootManager
   m_TagString: Untagged
@@ -3837,6 +3945,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   expPickup: {fileID: 8366531446266242152, guid: 2fc4995b1dfdb3949b5eede33f722652, type: 3}
+--- !u!114 &1603865725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603865722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1db1de700c26ab4baea19be2b2aad68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 98047ef44388ee246b8d1361999713a5, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1603865724}
+        m_TargetAssemblyTypeName: LootManager, Assembly-CSharp
+        m_MethodName: SpawnLoot
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1629312325 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6540769337927692015, guid: d917db35d0133c041bde23dc128054e6, type: 3}
@@ -4050,6 +4186,7 @@ GameObject:
   - component: {fileID: 1777559807}
   - component: {fileID: 1777559806}
   - component: {fileID: 1777559805}
+  - component: {fileID: 1777559808}
   m_Layer: 5
   m_Name: HitEffect
   m_TagString: Untagged
@@ -4136,6 +4273,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1777559803}
   m_CullTransparentMesh: 1
+--- !u!114 &1777559808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777559803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0844ec0295cd4984990b21d8e29be8f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 9abddda6a8b133d46ae57b0bae958e77, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1777559805}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Show
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1782567319
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5097,6 +5262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2124128303}
   - component: {fileID: 2124128304}
+  - component: {fileID: 2124128305}
   m_Layer: 0
   m_Name: EnemyManager
   m_TagString: Untagged
@@ -5132,3 +5298,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skipUpdatesFar: 3
+--- !u!114 &2124128305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2124128302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1db1de700c26ab4baea19be2b2aad68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 98047ef44388ee246b8d1361999713a5, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2124128304}
+        m_TargetAssemblyTypeName: EnemyManager, Assembly-CSharp
+        m_MethodName: OnEnemyDied
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
