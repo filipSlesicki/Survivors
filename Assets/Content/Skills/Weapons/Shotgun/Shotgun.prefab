@@ -270,7 +270,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2130736306302974815}
-  - component: {fileID: 2130736306302974752}
+  - component: {fileID: 13791248470078011}
   m_Layer: 0
   m_Name: Shotgun
   m_TagString: Untagged
@@ -295,7 +295,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2130736306302974752
+--- !u!114 &13791248470078011
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -304,10 +304,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2130736306302974814}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 350e1b3e4990ac14d97eb981c9b92392, type: 3}
+  m_Script: {fileID: 11500000, guid: 5da3971210c506c47aae2f6eb9ad3ebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootPoints:
+  autoPlaceShootPositions: 0
+  autoDistanceFromWeapon: 1
+  customShootPoints:
   - {fileID: 2530017879050666290}
   - {fileID: 2166508073509225276}
   - {fileID: 6468364638326998585}
@@ -321,7 +323,20 @@ MonoBehaviour:
   - {fileID: 1047728698076310964}
   - {fileID: 6831032219201935996}
   - {fileID: 1216648025064086260}
+  shootPositions: []
   aimAtClosest: 1
+  onFinishSetup:
+    m_PersistentCalls:
+      m_Calls: []
+  onStartShooting:
+    m_PersistentCalls:
+      m_Calls: []
+  onStopShooting:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdateHitPoint:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2540151234558338688
 GameObject:
   m_ObjectHideFlags: 0

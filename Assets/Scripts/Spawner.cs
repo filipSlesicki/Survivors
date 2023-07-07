@@ -7,9 +7,11 @@ public class Spawner : MonoBehaviour
     [SerializeField] EnemySpawnChance[] enemies;
     [SerializeField] SpawnerProfile profile;
     int level;
+    int spawnCount;
 
     private void Start()
     {
+        spawnCount = profile.spawnCount;
         StartCoroutine(SpawningCor());
     }
 
@@ -47,7 +49,7 @@ public class Spawner : MonoBehaviour
     {
         
         Vector2 playerPos = Player.Instance.transform.position;
-        for (int i = 0; i < profile.spawnCount; i++)
+        for (int i = 0; i < spawnCount; i++)
         {
             Vector2 randomPos = playerPos + Random.insideUnitCircle.normalized * 
                 Random.Range(profile.minDistanceToPlayer, profile.maxDistanceFromPlayer);
@@ -56,7 +58,7 @@ public class Spawner : MonoBehaviour
             EnemyManager.OnEnemySpawned(enemy);
         }
         level++;
-        profile.spawnCount += 5;
+        spawnCount += 5;
     }
 }
 

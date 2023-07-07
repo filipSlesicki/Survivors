@@ -4,13 +4,16 @@ using UnityEngine;
 using System.Text;
 using UnityEditor;
 
-public abstract class WeaponData : SkillData
+[CreateAssetMenu(menuName = "Weapons/WeaponData")]
+public class WeaponData : SkillData
 {
-    [field: SerializeField] public WeaponBonusPerLevel[] BonusPerLevel { get; private set; }
+    [field: SerializeField] public FireMode fireMode { get; private set; }
+    [field: SerializeField] public ShootType shootType { get; private set; }
+    [field: SerializeField] public HitEffect[] hitEffects { get; private set; }
+    [field: SerializeField] public Weapon weaponPrefab { get; private set; }
+    [field: SerializeField] public BaseWeaponStatsData stats { get; private set; }
     public override int MaxLevel => BonusPerLevel.Length;
-    public abstract Weapon WeaponPrefab { get; }
-    public abstract BaseWeaponStatsData Stats { get;}
-
+    [field: SerializeField] public WeaponBonusPerLevel[] BonusPerLevel { get; private set; }
     public string GetBonusDescription(int level)
     {
         WeaponBonusPerLevel levelupBonus = BonusPerLevel[level];

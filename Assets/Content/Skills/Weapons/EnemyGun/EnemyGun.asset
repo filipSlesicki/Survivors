@@ -9,11 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb47229b825903f4a9dbd95188aa05d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c5ec613ae308b24d910d5cb89a436cc, type: 3}
   m_Name: EnemyGun
   m_EditorClassIdentifier: 
-  <Icon>k__BackingField: {fileID: 21300000, guid: b47e5e900aad8344f8c4b8bf0a328d3c, type: 3}
-  <Description>k__BackingField: Basic gun
+  <Icon>k__BackingField: {fileID: 0}
+  <Description>k__BackingField: 
+  <fireMode>k__BackingField: {fileID: 11400000, guid: 4e7fb4dc99b8b6b448526b0be0293fdf, type: 2}
+  <shootType>k__BackingField: {fileID: 11400000, guid: 1afb0118e6495e747a10371a3fc37562, type: 2}
+  <hitEffects>k__BackingField:
+  - {fileID: 11400000, guid: 0ff68ee2ea4b64447a7f6b3ed7490faf, type: 2}
+  <weaponPrefab>k__BackingField: {fileID: -5366202014920787805, guid: 9440afb706457424bb7884df027e67be, type: 3}
+  <stats>k__BackingField: {fileID: 0}
   <BonusPerLevel>k__BackingField: []
-  <stats>k__BackingField: {fileID: 11400000, guid: 65a617a536b14fe4da194479747df45e, type: 2}
-  <weaponPrefab>k__BackingField: {fileID: 4678561879792168168, guid: 9440afb706457424bb7884df027e67be, type: 3}

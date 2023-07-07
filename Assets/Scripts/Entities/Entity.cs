@@ -20,7 +20,7 @@ public class Entity : MonoBehaviour
     {
         currentHealth -= damageInfo.damage;
         damageInfo.attacked = this;
-        onDamagedEvent.Raise(damageInfo);
+        onDamagedEvent.Invoke(damageInfo);
         if (currentHealth <= 0)
         {
             Die(damageInfo.attacker);
@@ -31,7 +31,7 @@ public class Entity : MonoBehaviour
 
     public virtual void Die(Entity killer)
     {
-        onDeathEvent.Raise(new DeathInfo(this, killer));
+        onDeathEvent.Invoke(new DeathInfo(this, killer));
     }
 
 }

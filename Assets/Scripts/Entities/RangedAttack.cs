@@ -7,10 +7,9 @@ public class RangedAttack : EnemyAttack
     [SerializeField] WeaponData weaponData;
     [SerializeField] Transform weaponParent;
     private Weapon weapon;
-
     private void Start()
     {
-        Weapon newWeapon = Instantiate(weaponData.WeaponPrefab, weaponParent);
+        Weapon newWeapon = Instantiate(weaponData.weaponPrefab, weaponParent);
         newWeapon.transform.localPosition = Vector3.zero;
         newWeapon.Setup(weaponData, GetComponent<Enemy>());
         weapon = newWeapon;

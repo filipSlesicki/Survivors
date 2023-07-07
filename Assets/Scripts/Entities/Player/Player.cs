@@ -13,7 +13,6 @@ public class Player : Character
     [SerializeField] PlayerAttack attack;
 
     public FloatEvent onHealthChangedEvent;
-
     protected override void Awake()
     {
         base.Awake();
@@ -62,12 +61,12 @@ public class Player : Character
     public override void TakeDamage(DamageInfo damageInfo)
     {
         base.TakeDamage(damageInfo);
-        onHealthChangedEvent.Raise(currentHealth / maxHealth);
+        onHealthChangedEvent.Invoke(currentHealth / maxHealth);
     }
     public  void Heal(float amount)
     {
         currentHealth += amount;
-        onHealthChangedEvent.Raise(currentHealth / maxHealth);
+        onHealthChangedEvent.Invoke(currentHealth / maxHealth);
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;

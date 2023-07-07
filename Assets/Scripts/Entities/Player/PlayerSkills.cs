@@ -50,7 +50,7 @@ public class PlayerSkills : MonoBehaviour
         }
         else
         {
-            Weapon newWeapon = Instantiate(weaponData.WeaponPrefab, weaponParent);
+            Weapon newWeapon = Instantiate(weaponData.weaponPrefab, weaponParent);
             newWeapon.transform.localPosition = Vector3.zero;
             newWeapon.Setup(weaponData, Player.Instance);
             weapons.Add(weaponData, newWeapon);

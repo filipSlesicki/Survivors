@@ -14,7 +14,7 @@ public enum CharacterStats
     Damage
 }
 
-public enum WeaponStatType 
+public enum WeaponStat 
 {
     Damage,
     CoolDown,

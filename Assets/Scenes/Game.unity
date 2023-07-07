@@ -1500,7 +1500,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 142.1, y: 107.7, z: -10}
+  m_LocalPosition: {x: 102.6, y: 100.8, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2241,7 +2241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponParent: {fileID: 1576725497}
-  startWeapon: {fileID: 11400000, guid: 0cfbcb8e992513c459733a29078402f4, type: 2}
+  startWeapon: {fileID: 11400000, guid: b6ca2bd53ae310b46b0e116f05cfdc1b, type: 2}
 --- !u!4 &1056822177
 Transform:
   m_ObjectHideFlags: 0
@@ -2250,7 +2250,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1056822175}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 145, y: 112, z: 0}
+  m_LocalPosition: {x: 100, y: 100, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2360,7 +2360,7 @@ MonoBehaviour:
   onDeathEvent: {fileID: 11400000, guid: 756f1d8e70415c7498630a7f4f60fe18, type: 2}
   movement: {fileID: 1056822181}
   attack: {fileID: 1056822183}
-  onHealthChangedEvent: {fileID: 0}
+  onHealthChangedEvent: {fileID: 11400000, guid: 5d2bb946226631148823790017f249ea, type: 2}
 --- !u!70 &1056822180
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2449,6 +2449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5472436a8cf74914297cce2d390d1cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnClosestEnemyFoundEvent: {fileID: 11400000, guid: bfccf623cf966a4419f3534f0e0bf29f, type: 2}
 --- !u!114 &1056822184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2823,11 +2824,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allSkills:
-  - {fileID: 11400000, guid: 0cfbcb8e992513c459733a29078402f4, type: 2}
+  - {fileID: 11400000, guid: 755e5fba9871d4a409312aa3416219f3, type: 2}
   - {fileID: 11400000, guid: 0f3a75fdea94e79489c3603367351ecf, type: 2}
   - {fileID: 11400000, guid: acb7f3e97dee5314bb289a6ae0bd7fae, type: 2}
   - {fileID: 11400000, guid: 305c4d393a8bd3741bdf078a332eb02d, type: 2}
-  - {fileID: 11400000, guid: 48ad65e180b660d429ebe1ef544c0995, type: 2}
+  - {fileID: 11400000, guid: b6ca2bd53ae310b46b0e116f05cfdc1b, type: 2}
+  - {fileID: 11400000, guid: 22924d87fa90d4e438a9e548b27281ec, type: 2}
+  - {fileID: 11400000, guid: 66899811cd96f514ca135d3234afe9a7, type: 2}
+  - {fileID: 11400000, guid: 6025607fcd903ab4faab69169ee946bb, type: 2}
   - {fileID: 11400000, guid: 1ebafe1bcdf83db49b99302875e2b094, type: 2}
   skillSelectScreen: {fileID: 907313859}
   skillSelectButtons:
@@ -2894,10 +2898,10 @@ MonoBehaviour:
   enemies:
   - prefab: {fileID: 8721016643645820127, guid: 4613bede9533d1749932f4e3a960e3d3, type: 3}
     chanceMin: 0
-    chanceMax: 80
-  - prefab: {fileID: 4715264460184889288, guid: 27d01fdc1f715f143b63a21068e75ff6, type: 3}
-    chanceMin: 81
     chanceMax: 100
+  - prefab: {fileID: 4715264460184889288, guid: 27d01fdc1f715f143b63a21068e75ff6, type: 3}
+    chanceMin: 101
+    chanceMax: 200
   profile: {fileID: 11400000, guid: d3d0db5ae13931c468f884c1d8943873, type: 2}
 --- !u!4 &1295982953
 Transform:
@@ -3362,6 +3366,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7242205403466117716, guid: c05028b800b7ad940996cbbfb26f6fb4, type: 3}
       propertyPath: m_SortingLayer
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7242205403466117716, guid: c05028b800b7ad940996cbbfb26f6fb4, type: 3}
+      propertyPath: m_SortingOrder
       value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7242205403466117716, guid: c05028b800b7ad940996cbbfb26f6fb4, type: 3}
@@ -4211,7 +4219,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.44000244, y: 0}
+  m_AnchoredPosition: {x: 0.5, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1777559805

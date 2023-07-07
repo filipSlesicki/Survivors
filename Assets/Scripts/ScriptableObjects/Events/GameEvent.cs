@@ -6,7 +6,7 @@ public abstract class GameEvent<T> : ScriptableObject
 {
     private readonly List<IGameEventListener<T>> listeners = new List<IGameEventListener<T>>();
 
-    public void Raise(T data)
+    public void Invoke(T data)
     {
         int count = listeners.Count;
         for (int i = 0; i < count; i++)

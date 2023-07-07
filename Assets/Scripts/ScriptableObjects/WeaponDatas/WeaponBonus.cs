@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public struct WeaponBonus
 {
-    public WeaponStatType stat;
+    public WeaponStat stat;
     public IncreaseType increaseType;
     public float increaseValue;
 
