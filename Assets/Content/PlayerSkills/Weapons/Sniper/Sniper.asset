@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c5ec613ae308b24d910d5cb89a436cc, type: 3}
+  m_Name: Sniper
+  m_EditorClassIdentifier: 
+  <Icon>k__BackingField: {fileID: 0}
+  <Description>k__BackingField: 
+  <fireMode>k__BackingField: {fileID: 11400000, guid: fcac5098f5f93644cae85cc0c07fe3bd, type: 2}
+  <shootType>k__BackingField: {fileID: 11400000, guid: 5cce32c5c22a45b4eb6c3539da8b9159, type: 2}
+  <hitEffects>k__BackingField:
+  - {fileID: 11400000, guid: 0ff68ee2ea4b64447a7f6b3ed7490faf, type: 2}
+  <weaponPrefab>k__BackingField: {fileID: -487784431334121509, guid: 42e510c0ea5f39b46b1953c732f84cd2, type: 3}
+  <stats>k__BackingField: {fileID: 11400000, guid: 7d9f829cdfa19474faab280784d8df63, type: 2}
+  <BonusPerLevel>k__BackingField:
+  - bonuses:
+    - stat: 1
+      increaseType: 2
+      increaseValue: -10
+    - stat: 0
+      increaseType: 0
+      increaseValue: 1
+  - bonuses:
+    - stat: 1
+      increaseType: 2
+      increaseValue: -10
+    - stat: 5
+      increaseType: 0
+      increaseValue: 1
+  - bonuses:
+    - stat: 4
+      increaseType: 1
+      increaseValue: 2
+    - stat: 0
+      increaseType: 0
+      increaseValue: 2
+  - bonuses:
+    - stat: 1
+      increaseType: 2
+      increaseValue: -10
+    - stat: 0
+      increaseType: 0
+      increaseValue: 2
+  - bonuses:
+    - stat: 0
+      increaseType: 2
+      increaseValue: 20
+    - stat: 5
+      increaseType: 0
+      increaseValue: 2

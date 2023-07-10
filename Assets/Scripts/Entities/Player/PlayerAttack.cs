@@ -9,7 +9,7 @@ public class PlayerAttack : MonoBehaviour
     public static Vector3 closestEnemyPos;
     public void Tick()
     {
-        Enemy target = EnemyManager.GetClosestEnemyFromPoint(Player.Instance.movement.lastPosition);
+        Enemy target = EnemyManager.Instance.GetClosestEnemyFromPoint(Player.Instance.movement.lastPosition);
         if(target)
         { 
             closestEnemyPos = target.movement.lastPosition;
@@ -25,5 +25,10 @@ public class PlayerAttack : MonoBehaviour
             //}
             weapon.Tick();
         }
+    }
+
+    public void UpdateWeaponDamageStats(DamageInfo damageInfo)
+    {
+        damageInfo.weapon?.UpdateDamageDealt(damageInfo.damage);
     }
 }

@@ -5,8 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Spanwer profile")]
 public class SpawnerProfile : ScriptableObject
 {
-    [SerializeField] public int spawnCount = 50;
-    [SerializeField] public float minDistanceToPlayer = 5;
-    [SerializeField] public float maxDistanceFromPlayer = 30;
-    [SerializeField] public float spawnTime = 20;
+    public int spawnCount = 50;
+    public float minDistanceToPlayer = 5;
+    public float maxDistanceFromPlayer = 30;
+    public float spawnTime = 20;
+    public RandomEnemyChance enemies;
 }

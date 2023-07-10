@@ -22,7 +22,7 @@ public struct DamageInfo
     {
         this.damage = damage;
         this.weapon = weapon;
-        attacker = null;
+        attacker = weapon.owner;
         attacked = null;
     }
 }

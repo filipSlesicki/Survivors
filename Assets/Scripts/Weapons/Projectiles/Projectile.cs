@@ -10,8 +10,9 @@ public class Projectile : MonoBehaviour
     protected ObjectPool<Projectile> bulletPool;
     protected float destroyTime;
     public Rigidbody2D rb;
+    [SerializeField] SpriteRenderer renderer;
 
-    public virtual void Launch(Weapon weapon, ObjectPool<Projectile> bulletPool)
+    public virtual void Launch(Weapon weapon, ObjectPool<Projectile> bulletPool, Color color)
     {
         penetration = weapon.penetration;
         transform.localScale = Vector3.one * weapon.size;
@@ -19,6 +20,7 @@ public class Projectile : MonoBehaviour
         gameObject.layer = weapon.GetProjectileLayer();
         destroyTime = Time.time + weapon.duration;
         this.bulletPool = bulletPool;
+        renderer.color = color;
     }
 
     private void Update()

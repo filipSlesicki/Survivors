@@ -23,7 +23,9 @@ public struct CalculateFlowFieldJob : IJob
 		CreateIntegrationField(target);
 		CreateFlowField();
 	}
-
+	/// <summary>
+	/// Reset cells cost and best direction
+	/// </summary>
 	public void ResetCells()
 	{
 		int cellCount = grid.Length;
@@ -36,7 +38,7 @@ public struct CalculateFlowFieldJob : IJob
 	public void CreateIntegrationField(Cell destinationCell)
 	{
 		destinationCell.bestCost = 0;
-		grid[destinationCell.index] = destinationCell;
+		grid[destinationCell.flatIndex] = destinationCell;
 		NativeQueue<Cell> cellsToCheck = new NativeQueue<Cell>(Allocator.Temp);
 		cellsToCheck.Enqueue(destinationCell);
 
@@ -54,7 +56,7 @@ public struct CalculateFlowFieldJob : IJob
 				{
 					curNeighbor.bestCost = (ushort)(curNeighbor.cost + curCell.bestCost);
 					cellsToCheck.Enqueue(curNeighbor);
-					grid[curNeighbor.index] = curNeighbor;
+					grid[curNeighbor.flatIndex] = curNeighbor;
 				}
 			}
 		}
@@ -90,19 +92,18 @@ public struct CalculateFlowFieldJob : IJob
 		neighbors.Dispose();
 	}
 
-	public int GetFlatIndex(int x, int y)
+	public int CalculateFlatIndex(int x, int y)
 	{
 		return y + x * height;
 	}
 
-	[return: AssumeRange(0, 8)]
 	private int GetNeighbors(int2 from, NativeArray<Cell> neighbors)
 	{
 		int validNeighbors = 0;
 
 		for (int i = 0; i < neighbors.Length; i++)
 		{
-			int neighborId = GetCellAtRelativePos(from, directions[i]);
+			int neighborId = GetCellInDirection(from, directions[i]);
 			if (neighborId != -1)
 			{
 				neighbors[validNeighbors] = grid[neighborId];
@@ -112,17 +113,17 @@ public struct CalculateFlowFieldJob : IJob
 		return validNeighbors;
 	}
 
-	private int GetCellAtRelativePos(int2 orignPos, int2 relativePos)
+	private int GetCellInDirection(int2 orignPos, int2 direction)
 	{
-		int2 finalPos = orignPos + relativePos;
+		int2 finalPos = orignPos + direction;
 
 		if (finalPos.x >= 0 && finalPos.x < width && finalPos.y >= 0 && finalPos.y < height)
 		{
-			return GetFlatIndex(finalPos.x, finalPos.y);
+			return CalculateFlatIndex(finalPos.x, finalPos.y);
 		}
 		return -1;
 	}
-	[return: AssumeRange(-1, 7)]
+
 	int GetDirectionIndex(int x, int y)
     {
 		switch (x, y)

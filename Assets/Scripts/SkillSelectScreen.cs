@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.AddressableAssets;
 
 public class SkillSelectScreen : MonoBehaviour
 {
+    [SerializeField]
+    AssetLabelReference skillLabel;
     public List<SkillData> allSkills;
     [SerializeField] GameObject skillSelectScreen;
 
     [SerializeField] SkillSelectButton[] skillSelectButtons;
 
-    //private void Start()
-    //{
-    //    ShowSkillsToSelect(0);
-    //}
+    private void Start()
+    {
+        Addressables.LoadAssetsAsync<SkillData>(skillLabel, null).Completed += skills => allSkills = skills.Result.ToList();
+    }
 
     private void OnEnable()
     {
@@ -62,4 +65,6 @@ public class SkillSelectScreen : MonoBehaviour
             skillSelectButtons[0].gameObject.SetActive(false);
         }
     }
+
+
 }

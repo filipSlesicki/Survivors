@@ -8,6 +8,7 @@ public class ShootProjectile : ShootType
 {
     public Projectile projectilePrefab;
     protected ObjectPool<Projectile> bulletPool;
+    public Color color;
 
     private void OnEnable()
     {
@@ -23,7 +24,7 @@ public class ShootProjectile : ShootType
         {
             Projectile projectile = bulletPool.Get();
             projectile.transform.SetPositionAndRotation(shootPoints[i].position, shootPoints[i].rotation);
-            projectile.Launch(weapon,bulletPool);
+            projectile.Launch(weapon,bulletPool,color);
         }
     }
 

@@ -3,20 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// Handles bonuses on a character. Created in the character class
+/// </summary>
 public class Bonuses
 {
     Dictionary<CharacterStats,List<PassiveBonusInfo>> passiveBonuses = new Dictionary<CharacterStats, List<PassiveBonusInfo>>();
     public event Action<CharacterStats, PassiveBonusInfo> OnBonusGained;
     public event Action<CharacterStats, PassiveBonusInfo> OnBonusLost;
-
-    //public Bonuses()
-    //{
-    //    foreach (PlayerStats stat in Enum.GetValues(typeof( PlayerStats)))
-    //    {
-    //        passiveBonuses.Add(stat, new List<PassiveBonusInfo>());
-    //    }
-    //}
-
+    
 
     public void AddBonus(CharacterStats stat, PassiveBonusInfo bonusInfo)
     {
@@ -47,7 +42,22 @@ public class Bonuses
             }
         }
     }
+    void RemoveBonus(CharacterStats stat, PassiveBonusInfo bonusInfo)
+    {
+        if (!passiveBonuses.ContainsKey(stat))
+        {
+            Debug.LogWarning("Trying to remove bonus that doesnt exist");
+            return;
+        }
+        passiveBonuses[stat].Remove(bonusInfo);
+        OnBonusLost?.Invoke(stat, bonusInfo);
+    }
 
+    /// <summary>
+    /// Modifies a value by all character bonuses
+    /// </summary>
+    /// <param name="stat">Stat to modify</param>
+    /// <param name="baseValue">value to change</param>
     public void ApplyAllBonuses(CharacterStats stat,ref float baseValue)
     {
         if (!passiveBonuses.ContainsKey(stat))
@@ -58,7 +68,9 @@ public class Bonuses
             ApplyBonusToValue(ref baseValue, bonus.increaseType,bonus.value);
         }
     }
-
+    /// <summary>
+    /// Modifies value. Can be used for all bonuses. Maybe move it to it's own class?
+    /// </summary>
     public static void ApplyBonusToValue(ref float baseValue, IncreaseType increaseType, float increaseValue)
     {
         switch (increaseType)
@@ -70,7 +82,7 @@ public class Bonuses
                 baseValue *= increaseValue;
                 break;
             case IncreaseType.AddPercent:
-                baseValue *= 1 + increaseValue / 100;
+                baseValue *= 1 + increaseValue * 0.01f;
                 break;
             case IncreaseType.Set:
                 baseValue = increaseValue;
@@ -83,17 +95,6 @@ public class Bonuses
     public static void ApplyBonusToValue(ref float baseValue, PassiveBonusInfo bonus)
     {
         ApplyBonusToValue(ref baseValue, bonus.increaseType, bonus.value);
-    }
-
-    void RemoveBonus(CharacterStats stat, PassiveBonusInfo bonusInfo)
-    {
-        if(!passiveBonuses.ContainsKey(stat))
-        {
-            Debug.LogWarning("Trying to remove bonus that doesnt exist");
-            return;
-        }
-        passiveBonuses[stat].Remove(bonusInfo);
-        OnBonusLost?.Invoke(stat, bonusInfo);
     }
 }
 

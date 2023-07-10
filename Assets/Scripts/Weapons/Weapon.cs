@@ -9,7 +9,7 @@ public class Weapon : MonoBehaviour
     public bool autoPlaceShootPositions;
     public float autoDistanceFromWeapon = 1;
     [HideInInspector]
-    public Transform[] shootPositions;
+    public List<Transform> shootPositions = new List<Transform>();
 
     //Current Stats
     public bool aimAtClosest = true;
@@ -65,19 +65,10 @@ public class Weapon : MonoBehaviour
         return 0;
     }
 
-   
-
-    private void OnDisable()
+  
+    public void UpdateDamageDealt(float damage)
     {
-        //Enemy.OnEnemyDamaged -= UpdateDamageDealt;
-    }
-
-    void UpdateDamageDealt(DamageInfo dd)
-    {
-        if(dd.weapon == this)
-        {
-            damageDealt += dd.damage;
-        }
+        damageDealt += damage;
     }
 
     public void Setup(WeaponData data, Character owner)
@@ -104,8 +95,12 @@ public class Weapon : MonoBehaviour
     protected virtual void SetOwner(Character owner)
     {
         this.owner = owner;
-        //owner.bonuses.ApplyAllBonuses(CharacterStats.Damage, ref damage);
-        //owner.bonuses.ApplyAllBonuses(CharacterStats.AttackSpeed, ref cooldown);
+        float damageValue = damage;
+        owner.bonuses.ApplyAllBonuses(CharacterStats.Damage, ref damageValue);
+        damage = damageValue;
+        float cooldownValue = cooldown;
+        owner.bonuses.ApplyAllBonuses(CharacterStats.AttackSpeed, ref cooldownValue);
+        cooldown = cooldownValue;
         if(owner is Player)
         {
             aquireTime = GameTime.totalTimeInSeconds;
@@ -181,48 +176,32 @@ public class Weapon : MonoBehaviour
 
     void UpdateShootPositions()
     {
-        //if(shootPositions.Length != bulletCount)
-        //{
-        //    shootPositions = new PosRotPair[bulletCount];
-        //    if (!autoPlaceShootPositions)
-        //    {
-        //        for (int i = 0; i < bulletCount; i++)
-        //        {
-        //            shootPositions[i] = (new PosRotPair(customShootPoints[i]));
-        //        }
-        //    }
-        //}
-
-        if (!autoPlaceShootPositions || shootPositions.Length == bulletCount)
+        if (!autoPlaceShootPositions || shootPositions.Count == bulletCount)
         {
             return;
         }
 
-        foreach (var shootPos in shootPositions)
+        while(shootPositions.Count < bulletCount)
         {
-            Destroy(shootPos.gameObject);
+            GameObject newShootPos = new GameObject();
+            newShootPos.transform.SetParent(transform);
+            shootPositions.Add(newShootPos.transform);
         }
-        shootPositions = new Transform[bulletCount];
             
 
-        float weaponAngle = transform.rotation.eulerAngles.z;
+
         float anglePerBullet = 360 / bulletCount;
         for (int i = 0; i < bulletCount; i++)
         {
             float currentAngle = anglePerBullet * i;
-            Debug.Log(currentAngle);
-            Vector3 position = transform.position +
+            Vector3 position =
                 new Vector3(Mathf.Cos(Mathf.Deg2Rad * currentAngle) * autoDistanceFromWeapon,
                 Mathf.Sin(Mathf.Deg2Rad * currentAngle) * autoDistanceFromWeapon,
                 0);
 
-            Quaternion outwardDir = Quaternion.Euler(0, 0, weaponAngle + currentAngle);
-            GameObject newShootPos = new GameObject();
-            newShootPos.transform.SetPositionAndRotation(position, outwardDir);
-            newShootPos.transform.SetParent(transform);
-
-            shootPositions[i] = newShootPos.transform;
-            
+            Quaternion outwardDir = Quaternion.Euler(0, 0, currentAngle);
+            shootPositions[i].SetLocalPositionAndRotation(position, outwardDir);            
         }
     }
+
 }

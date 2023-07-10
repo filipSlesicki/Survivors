@@ -5,7 +5,8 @@ using UnityEngine;
 public class FlowFieldTarget : MonoBehaviour
 {
     public Transform trans;
-    public int lastGridIndex;
+    public int lastGridIndex = -1;
+    public int lastSectorIndex = -1;
 
     private void Awake()
     {

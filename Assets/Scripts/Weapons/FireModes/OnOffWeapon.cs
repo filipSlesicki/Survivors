@@ -21,7 +21,10 @@ public class OnOffWeapon : FireMode
     IEnumerator ActivateWeapon(Weapon weapon)
     {
         if (line)
+        {
             line.MakeLines(weapon);
+        }
+
 
         int ticks = Mathf.FloorToInt( weapon.duration / tickRate);
         for (int i = 0; i < ticks; i++)
@@ -32,6 +35,9 @@ public class OnOffWeapon : FireMode
         weapon.onStopShooting?.Invoke();
 
         if (line)
+        {
             line.DestroyLines(weapon);
+        }
+  
     }
 }

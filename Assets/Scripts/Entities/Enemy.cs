@@ -24,7 +24,7 @@ public class Enemy : Character
            attack.Attack(Player.Instance);
         }
 
-        var cellUnder = GridController.curFlowField.GetCellFromWorldPos(movement.lastPosition);
+        var cellUnder = GridController.Instance.GetCellAtWorldPosition(movement.lastPosition);
         movement.SetDirection(cellUnder.BestNormalizedDirection);
 
 
@@ -32,7 +32,7 @@ public class Enemy : Character
 
     public void SimpleTick(float dt)
     {
-        var cellUnder = GridController.curFlowField.GetCellFromWorldPos(movement.lastPosition);
+        var cellUnder = GridController.Instance.GetCellAtWorldPosition(movement.lastPosition);
         movement.SetDirection(cellUnder.BestNormalizedDirection);
     }
 

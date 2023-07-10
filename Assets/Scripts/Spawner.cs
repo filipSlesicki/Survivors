@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] EnemySpawnChance[] enemies;
     [SerializeField] SpawnerProfile profile;
+    [SerializeField]  EnemyEvent onEnemySpawnedEvent;
     int level;
     int spawnCount;
 
@@ -23,19 +23,6 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    Enemy GetRandomEnemy()
-    {
-        float random = Random.Range(0, 100);
-        foreach (var enemy in enemies)
-        {
-            if(random >= enemy.chanceMin && random < enemy.chanceMax)
-            {
-                return enemy.prefab;
-            }
-        }
-        return enemies[0].prefab;
-    }
-
     IEnumerator SpawningCor()
     {
         yield return new WaitForSeconds(1);
@@ -48,26 +35,43 @@ public class Spawner : MonoBehaviour
     void SpawnEnemies()
     {
         
-        Vector2 playerPos = Player.Instance.transform.position;
+        Vector2 playerPos = Player.Instance.movement.lastPosition;
         for (int i = 0; i < spawnCount; i++)
         {
-            Vector2 randomPos = playerPos + Random.insideUnitCircle.normalized * 
-                Random.Range(profile.minDistanceToPlayer, profile.maxDistanceFromPlayer);
-            Enemy enemy = Instantiate(GetRandomEnemy(), randomPos, Quaternion.identity);
+            var enemyPrefab = profile.enemies.GetRandomEnemy();
+            Enemy enemy = Instantiate(enemyPrefab, RandomPostionAroundPlayer(playerPos, profile.maxDistanceFromPlayer), Quaternion.identity);
             enemy.Setup(level);
-            EnemyManager.OnEnemySpawned(enemy);
+            onEnemySpawnedEvent?.Invoke(enemy);
         }
         level++;
         spawnCount += 5;
     }
-}
 
-[System.Serializable]
-public class EnemySpawnChance
-{
-    public Enemy prefab;
-    public float chanceMin;
-    public float chanceMax;
+    Vector3 RandomPostionAroundPlayer(Vector2 playerPos, float maxDistance)
+    {
+        //Get random position around the player and make sure its within map bounds
+        Vector2 offset = Random.insideUnitCircle.normalized * Random.Range(profile.minDistanceToPlayer, maxDistance);
+
+        float posX = playerPos.x + offset.x;
+        if(posX <= 0 || posX >= GridController.Instance.topRightCorner.x)
+        {
+            posX = playerPos.x - offset.x;
+        }
+        float posY = playerPos.y + offset.y;
+        if (posY <= 0 || posY >= GridController.Instance.topRightCorner.y)
+        {
+            posY =  playerPos.y -offset.y ;
+        }
+        Vector3 randomPos = new Vector3(posX, posY, 0);
+        if(GridController.Instance.IsPositionValid(randomPos))
+            return randomPos;
+        else
+        {
+            return RandomPostionAroundPlayer(playerPos, maxDistance + 1);
+        }
+        //TODO: Better system for handling invalid positions
+
+    }
 }
 
 

@@ -25,7 +25,7 @@ public class EndGameStats : MonoBehaviour
             weaponStat.Set(weapon);
         }
     }
-
+    //TODO: Move to other class
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

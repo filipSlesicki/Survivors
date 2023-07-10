@@ -17,6 +17,7 @@ public class DamagePopup : MonoBehaviour
 
     public void Update()
     {
+        //Move up and destroy after time
         t -= Time.deltaTime;
         transform.position += moveSpeed * Time.deltaTime * Vector3.up ;
         text.alpha = t;

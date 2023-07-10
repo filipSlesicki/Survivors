@@ -12,9 +12,9 @@ public class MovingProjectile : Projectile
         destroyTime = Time.time + lifeTime;
     }
 
-    public override void Launch(Weapon weapon, ObjectPool<Projectile> bulletPool)
+    public override void Launch(Weapon weapon, ObjectPool<Projectile> bulletPool, Color color)
     {
-        base.Launch(weapon, bulletPool);
+        base.Launch(weapon, bulletPool,color);
         rb.velocity = transform.right * weapon.projectileSpeed;
 
     }    

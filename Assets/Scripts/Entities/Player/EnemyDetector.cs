@@ -8,7 +8,7 @@ public class EnemyDetector : MonoBehaviour
     {
         if (collision.TryGetComponent<Enemy>(out Enemy enemy))
         {
-            EnemyManager.AddNearbyEnemy(enemy);
+            EnemyManager.Instance.AddNearbyEnemy(enemy);
         }
     }
 
@@ -16,7 +16,7 @@ public class EnemyDetector : MonoBehaviour
     {
         if (collision.TryGetComponent<Enemy>(out Enemy enemy))
         {
-            EnemyManager.RemoveNearbyEnemy(enemy);
+            EnemyManager.Instance.OnEnemyLeftRange(enemy);
         }
     }
 }

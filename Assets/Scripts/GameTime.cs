@@ -4,6 +4,9 @@ using UnityEngine;
 using TMPro;
 using System;
 
+/// <summary>
+/// Handles Time display
+/// </summary>
 public class GameTime : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI text;

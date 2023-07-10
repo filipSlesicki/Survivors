@@ -33,7 +33,7 @@ public class PlayerLevel : MonoBehaviour
         {
             LevelUp();
         }
-        onExpGainedEvent.Invoke(exp/ expValues.expPerLevel[level]);
+        onExpGainedEvent.Invoke((float)exp/ expValues.expPerLevel[level]);
     }
 
     void LevelUp()

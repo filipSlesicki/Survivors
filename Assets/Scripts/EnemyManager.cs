@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    static List<Enemy> nearbyEnemies = new List<Enemy>();
-    static List<Enemy> farEnemies = new List<Enemy>();
+    /// <summary>
+    /// List of near enemies. Set in <see cref="EnemyDetector"/> on player
+    /// </summary>
+    List<Enemy> nearbyEnemies = new List<Enemy>();
+    /// <summary>
+    /// List of near enemies. Set in <see cref="EnemyDetector"/> on player
+    /// </summary>
+    List<Enemy> farEnemies = new List<Enemy>();
 
+    List<Enemy> nearbyToRemove = new List<Enemy>();
+    [Tooltip("Only update enemies every n frames")]
     [SerializeField] int skipUpdatesFar = 3;
+    /// <summary>
+    /// Frames passed since last far enemies update
+    /// </summary>
     int frameCount;
+
+    public static EnemyManager Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void OnDisable()
     {
-
         nearbyEnemies.Clear();
         farEnemies.Clear();
     }
@@ -26,22 +43,23 @@ public class EnemyManager : MonoBehaviour
         if (frameCount % skipUpdatesFar == 0) //Update far enemies every n frames
         {
             int count = farEnemies.Count;
-            for (int i = 0; i < count; i++)
+            for (int i = count - 1; i >= 0; i--)
             {
                 farEnemies[i].SimpleTick(dt);
             }
         }
-        else //Dont update close enemies every n frames
+        else //Dont update near enemies in the same frame as far enemies
         {
             int count = nearbyEnemies.Count;
-            for (int i = 0; i < count; i++)
+            for (int i = count - 1; i >= 0; i--)
             {
                 nearbyEnemies[i].Tick(dt);
             }
         }
+        UpdateEnemyLists();
     }
 
-    public static Enemy GetClosestEnemyFromPoint(Vector3 from)
+    public Enemy GetClosestEnemyFromPoint(Vector3 from)
     {
         float minDistance = float.MaxValue;
         Enemy closest = null;
@@ -56,19 +74,22 @@ public class EnemyManager : MonoBehaviour
         }
         return closest;
     }
-
-    public static void OnEnemySpawned(Enemy enemy)
+    /// <summary>
+    /// Handles enemy spawn event raised by <see cref="Spawner"/>
+    /// </summary>
+    /// <param name="enemy"></param>
+    public void OnEnemySpawned(Enemy enemy)
     {
         farEnemies.Add(enemy);
     }
 
-    public static void AddNearbyEnemy(Enemy enemy)
+    public void AddNearbyEnemy(Enemy enemy)
     {
         nearbyEnemies.Add(enemy);
         farEnemies.Remove(enemy);
     }
 
-    public static void RemoveNearbyEnemy(Enemy enemy)
+    void RemoveNearbyEnemy(Enemy enemy)
     {
         nearbyEnemies.Remove(enemy);
         if (enemy != null && enemy.currentHealth > 0)
@@ -77,6 +98,20 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    public void OnEnemyLeftRange(Enemy enemy)
+    {
+        nearbyToRemove.Add(enemy);
+    }
+
+
+    void UpdateEnemyLists()
+    {
+        foreach (var enemy in nearbyToRemove)
+        {
+            RemoveNearbyEnemy(enemy);
+        }
+        nearbyToRemove.Clear();
+    }
     public void OnEnemyDied(DeathInfo enemyDeathInfo)
     {
         nearbyEnemies.Remove(enemyDeathInfo.killed as Enemy);

@@ -61,12 +61,12 @@ public class Player : Character
     public override void TakeDamage(DamageInfo damageInfo)
     {
         base.TakeDamage(damageInfo);
-        onHealthChangedEvent.Invoke(currentHealth / maxHealth);
+        onHealthChangedEvent.Invoke((float)currentHealth / maxHealth);
     }
     public  void Heal(float amount)
     {
         currentHealth += amount;
-        onHealthChangedEvent.Invoke(currentHealth / maxHealth);
+        onHealthChangedEvent.Invoke((float)currentHealth / maxHealth);
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
