@@ -181,7 +181,7 @@ public class GridController : MonoBehaviour
                 foreach (var secotrJob in jobHandlesDictionary)
                 {
 					int sectorIndex = secotrJob.Key;
-					sectors[sectorIndex].FinishPathToPortal(secotrJob.Value, sectorGrid.cells[sectorIndex].bestDirectionIndex);
+					sectors[sectorIndex].FinishPathToPortal(secotrJob.Value);
                 }
 				jobHandlesDictionary.Clear();
 				changedSector = false;
@@ -201,7 +201,7 @@ public class GridController : MonoBehaviour
 	/// </summary>
 	void PlacePortals()
     {
-		//TODO: Multiple portals per sector
+		//TODO: Multiple portals in each direction
 		int sectorCount = sectors.Length;
 		//reusable edge cells buffers
 		Cell[] currentEdgeCells = new Cell[sectorSize]; 
@@ -213,6 +213,7 @@ public class GridController : MonoBehaviour
 			int2 sectorGridPos = sectorGrid.cells[sectorIndex].gridIndex;
 
 			//Add portals in every cardinal direction
+			//TODO: Add portals in diagonal directions
             for (int directionIndex = 0; directionIndex < 4; directionIndex++)
             {
 				//Find neighbour sector in direction
@@ -226,21 +227,23 @@ public class GridController : MonoBehaviour
 				neighbourSector.grid.GetEdgeCells(Directions.GetOppositeDirection(directionIndex), neighbourEdgeCells);
 
 
-				//Find first open cell from the middle.
-				int middleIndex = sectorSize / 2;
+				List<Cell> portalCells = new List<Cell>();
+				SectorPortal portal = null;
 				for (int i = 0; i < sectorSize; i++)
 				{
-					int sign = i % 2 == 0 ? 1 : -1;
-					int index = middleIndex + Mathf.CeilToInt(i / 2f) * sign;
 					//Check if both sides are walkable
-					if (currentEdgeCells[index].cost != 255 && neighbourEdgeCells[index].cost != 255)
+					if (currentEdgeCells[i].cost != 255 && neighbourEdgeCells[i].cost != 255)
 					{
-						SectorPortal portal = new SectorPortal(currentSector.index, neighbourSector.index, currentEdgeCells[index]);
-						currentSector.portalCells[directionIndex] = portal;
-						break;
+						portalCells.Add(currentEdgeCells[i]);
 					}
-					currentSector.portalCells[directionIndex] = null;
 				}
+				//If there's at least one walkable cell, create portal
+				if (portalCells.Count > 0)
+				{
+					portal = new SectorPortal(currentSector.index, neighbourSector.index, portalCells);
+				}
+				currentSector.portalCells[directionIndex] = portal;
+				portalCells.Clear();
 			}
 
         }
@@ -320,10 +323,13 @@ public class GridController : MonoBehaviour
         foreach (var sectorJob in jobHandlesDictionary)
         {
 			sectors[sectorJob.Key].flowField.CleanJobHandle(sectorJob.Value);
-
+		
 		}
 		jobHandlesDictionary.Clear();
-		playerSector.flowField.OnDestroy();
-
+		//playerSector.flowField.OnDestroy();
+        foreach (var sector in sectors)
+        {
+			sector.flowField.OnDestroy();
+        }
 	}
 }

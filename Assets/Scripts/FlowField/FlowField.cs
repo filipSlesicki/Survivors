@@ -9,33 +9,52 @@ public class FlowField
 	[ReadOnly]
 	static NativeArray<int2> _directions;
 
-	public CalculateFlowFieldJob calculateFlowFieldJob;
+	NativeArray<Cell> nativeGrid;
+
+	CalculateFlowFieldJob calculateFlowFieldJob;
+	CalculateFlowFieldToPortalsJob calculateFlowFieldToPortalJob;
 
 	public FlowField(Grid grid)
 	{
 		this.grid = grid;
-		if(!_directions.IsCreated)
+		nativeGrid = new NativeArray<Cell>(grid.cells, Allocator.Persistent);
+		if (!_directions.IsCreated)
 		_directions = new NativeArray<int2>(Directions.directions, Allocator.Persistent);
+		calculateFlowFieldJob = new CalculateFlowFieldJob();
+		calculateFlowFieldToPortalJob = new CalculateFlowFieldToPortalsJob();
 	}
 
 	public void OnDestroy()
 	{
+		if(_directions.IsCreated)
 		_directions.Dispose();
+
+		nativeGrid.Dispose();
 	}
 
 
 	public JobHandle CalculateFlowFieldToTarget(Cell destinationCell)
 	{
-		calculateFlowFieldJob = new CalculateFlowFieldJob()
-		{
-			grid = new NativeArray<Cell>(grid.cells, Allocator.TempJob),
-			target = destinationCell,
-			width = grid.width,
-			height = grid.height,
-			directions = _directions
-		};
+		nativeGrid.CopyFrom(grid.cells);
+		calculateFlowFieldJob.grid = nativeGrid;
+		calculateFlowFieldJob.directions = _directions;
+		calculateFlowFieldJob.width = grid.width;
+		calculateFlowFieldJob.height = grid.height;
+		calculateFlowFieldJob.target = destinationCell;
 
 		return calculateFlowFieldJob.Schedule();
+	}
+
+	public JobHandle CalculateFlowFieldToPortal(Cell[] destinationCells, int directionIndex)
+	{
+		nativeGrid.CopyFrom(grid.cells);
+		calculateFlowFieldToPortalJob.grid = nativeGrid;
+		calculateFlowFieldToPortalJob.directions = _directions;
+		calculateFlowFieldToPortalJob.width = grid.width;
+		calculateFlowFieldToPortalJob.height = grid.height;
+		calculateFlowFieldToPortalJob.targets = new NativeArray<Cell>(destinationCells, Allocator.TempJob) ;
+		calculateFlowFieldToPortalJob.direction = directionIndex;
+		return calculateFlowFieldToPortalJob.Schedule();
 	}
 
 	public void FinishFlowFieldJob(JobHandle handle)
@@ -43,7 +62,13 @@ public class FlowField
 		handle.Complete();
 		calculateFlowFieldJob.grid.CopyTo(grid.cells);
 		//this.grid.CopyFrom(calculateFlowFieldJob.grid);
-		calculateFlowFieldJob.grid.Dispose();
+		//calculateFlowFieldJob.grid.Dispose();
+	}
+	public void FinishFlowfieldToPortalJob(JobHandle handle)
+	{
+		handle.Complete();
+		calculateFlowFieldToPortalJob.grid.CopyTo(grid.cells);
+		calculateFlowFieldToPortalJob.targets.Dispose();
 	}
 
 	public void CleanJobHandle(JobHandle handle)

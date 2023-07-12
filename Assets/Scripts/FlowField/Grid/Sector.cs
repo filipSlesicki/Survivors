@@ -10,7 +10,7 @@ public class Sector
     public FlowField flowField;
     public Vector2 center;
     public SectorPortal[] portalCells = new SectorPortal[4];
-    public Cell targetPortalCell;
+    //public Cell targetPortalCell;
     public int index;
 
     public Sector(float _cellRadius, int2 _gridSize, Vector2 center, int flatIndex)
@@ -30,45 +30,35 @@ public class Sector
     public JobHandle CalculateFlowfieldToPortal(int dirIndex)
     {
         //Calmp to only cardinal directions.
-        if(dirIndex > 3)
+        if (dirIndex > 3)
         {
             dirIndex -= 4;
         }
-        targetPortalCell = portalCells[dirIndex].fromCell;
-        return flowField.CalculateFlowFieldToTarget(targetPortalCell);
+        return flowField.CalculateFlowFieldToPortal(portalCells[dirIndex].portalCells, dirIndex);
     }
-    /// <summary>
-    /// CalculateFlowfieldToPortal and finish immediately
-    /// </summary>
-    public void CalculateFlowToPortalImmediately(int dirIndex)
-    {
-        targetPortalCell = portalCells[dirIndex].fromCell;
-        FinishPathToPortal( flowField.CalculateFlowFieldToTarget(targetPortalCell),dirIndex);
-    }
+
     /// <summary>
     /// Finish CalculateFlowfieldToPortal job and set portal cell direction to the next sector
     /// </summary>
     /// <param name="handle">job handle</param>
     /// <param name="dirIndex"><see cref=" Directions.directions"/> index</param>
-    public void FinishPathToPortal(JobHandle handle, int dirIndex)
+    public void FinishPathToPortal(JobHandle handle)
     {
-        flowField.FinishFlowFieldJob(handle);
-
-        targetPortalCell.bestDirectionIndex = dirIndex;
-        targetPortalCell.bestCost = 1;
-        grid.cells[targetPortalCell.flatIndex] = targetPortalCell;
+        flowField.FinishFlowfieldToPortalJob(handle);
     }
 }
 public class SectorPortal
 {
     public int fromIndex;
     public int toIndex;
-    public Cell fromCell;
+    public Cell[] portalCells;
 
-    public SectorPortal(int from, int to, Cell cell)
+    public SectorPortal(int from, int to, List<Cell> cellList)
     {
         this.fromIndex = from;
         this.toIndex = to;
-        this.fromCell = cell;
+        portalCells = cellList.ToArray();
     }
+
+
 }

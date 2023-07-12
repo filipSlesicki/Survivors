@@ -493,9 +493,9 @@ MonoBehaviour:
   currentSectorFFJobDuration: 1
   otherSectorsFFJobDuration: 3
   sectorCount:
-    x: 1
-    y: 1
-  sectorSize: 100
+    x: 10
+    y: 10
+  sectorSize: 20
   cellRadius: 0.5
   moveCosts: {fileID: 11400000, guid: f3033d0c53d7c3149b6ef779b89794f2, type: 2}
   target: {fileID: 1056822185}
@@ -643,7 +643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridController: {fileID: 72817406}
-  displayGrid: 1
+  displayGrid: 0
   drawSectors: 1
   drawSubSectors: 0
   curDisplayType: 0
@@ -2482,7 +2482,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1056822175}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 53.6, y: 29, z: 0}
+  m_LocalPosition: {x: 22.69, y: 14.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2885,16 +2885,20 @@ PrefabInstance:
       value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7842240235700502454, guid: ad1f4bbe7e51bfd4f97180f9f1152296, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1513
+      objectReference: {fileID: 0}
+    - target: {fileID: 7842240235700502454, guid: ad1f4bbe7e51bfd4f97180f9f1152296, type: 3}
       propertyPath: m_LocalScale.y
-      value: 303.16635
+      value: 304.379
       objectReference: {fileID: 0}
     - target: {fileID: 7842240235700502454, guid: ad1f4bbe7e51bfd4f97180f9f1152296, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 40.209686
+      value: 138.4756
       objectReference: {fileID: 0}
     - target: {fileID: 7842240235700502454, guid: ad1f4bbe7e51bfd4f97180f9f1152296, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 120.33005
+      value: 119.7249
       objectReference: {fileID: 0}
     - target: {fileID: 7842240235700502454, guid: ad1f4bbe7e51bfd4f97180f9f1152296, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4715,11 +4719,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7842240235700502454, guid: ad1f4bbe7e51bfd4f97180f9f1152296, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 84.90968
+      value: 84.9
       objectReference: {fileID: 0}
     - target: {fileID: 7842240235700502454, guid: ad1f4bbe7e51bfd4f97180f9f1152296, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 67.73005
+      value: 166.9
       objectReference: {fileID: 0}
     - target: {fileID: 7842240235700502454, guid: ad1f4bbe7e51bfd4f97180f9f1152296, type: 3}
       propertyPath: m_LocalPosition.z

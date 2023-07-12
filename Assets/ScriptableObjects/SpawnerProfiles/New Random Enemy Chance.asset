@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies:
   - enemy: {fileID: 8721016643645820127, guid: 4613bede9533d1749932f4e3a960e3d3, type: 3}
-    dropChance: 0.68360275
+    dropChance: 0.651
   - enemy: {fileID: 4715264460184889288, guid: 27d01fdc1f715f143b63a21068e75ff6, type: 3}
     dropChance: 0.19861431
   - enemy: {fileID: 2604343143765257919, guid: f3429c4c3dee1d644b6e595f431aaccb, type: 3}
-    dropChance: 0.11778297
+    dropChance: 0.15038571
   colors:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0, g: 0, b: 1, a: 1}
