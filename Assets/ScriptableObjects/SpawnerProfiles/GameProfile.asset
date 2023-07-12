@@ -16,4 +16,4 @@ MonoBehaviour:
   minDistanceToPlayer: 20
   maxDistanceFromPlayer: 60
   spawnTime: 20
-  enemies: {fileID: 11400000, guid: 32c40170626b9fa4c92f2fd72345afa6, type: 2}
+  enemies: {fileID: 11400000, guid: e683710f0850b9b4b837a325f8a767a8, type: 2}

@@ -28,6 +28,7 @@ public class RandomEnemyChance : ScriptableObject
 public class EnemyChance
 {
     public Enemy enemy;
+    [Range(0,1f)]
     public float dropChance;
 }
 

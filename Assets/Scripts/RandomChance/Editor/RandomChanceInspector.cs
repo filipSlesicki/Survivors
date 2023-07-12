@@ -201,6 +201,20 @@ public class RandomChanceInspector : Editor
             //Calculate size
             float startX = totalSliderRect.xMin + totalPercentage * totalSliderRect.width;
             totalPercentage += items[i].dropChance;
+            if(totalPercentage > 1)
+            {
+                Debug.Log(totalPercentage-1);
+                items[i].dropChance -= totalPercentage - 1;
+                totalPercentage = 1;
+            }
+            if(i == items.Count -1)
+            {
+                if(totalPercentage < 1)
+                {
+                    items[i].dropChance += 1 - totalPercentage;
+                    totalPercentage = 1;
+                }
+            }
             float endX = totalSliderRect.xMin + totalPercentage * totalSliderRect.width;
             float currentWidth = endX - startX;
             Rect currentRect = new Rect(totalSliderRect.x + startX, totalSliderRect.y, currentWidth, totalSliderRect.height);
