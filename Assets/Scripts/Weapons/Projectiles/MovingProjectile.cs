@@ -4,17 +4,9 @@ using UnityEngine;
 using UnityEngine.Pool;
 public class MovingProjectile : Projectile
 {
-    public void Launch(float speed, float damage, Weapon owner, int penetration, float lifeTime)
+    public override void Launch(Weapon weapon, Color color)
     {
-        this.weapon = owner;
-        rb.velocity = transform.right * speed;
-        this.penetration = penetration;
-        destroyTime = Time.time + lifeTime;
-    }
-
-    public override void Launch(Weapon weapon, ObjectPool<Projectile> bulletPool, Color color)
-    {
-        base.Launch(weapon, bulletPool,color);
+        base.Launch(weapon, color);
         rb.velocity = transform.right * weapon.projectileSpeed;
 
     }    

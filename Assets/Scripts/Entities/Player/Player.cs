@@ -15,6 +15,7 @@ public class Player : Character
     public FloatEvent onHealthChangedEvent;
     protected override void Awake()
     {
+        PoolManager.ClearPools();
         base.Awake();
         Instance = this;
         input = GetComponent<PlayerInput>();

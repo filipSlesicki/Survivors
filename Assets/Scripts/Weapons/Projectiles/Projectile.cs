@@ -1,26 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class Projectile : MonoBehaviour
 {
     protected Weapon weapon;
     protected int penetration = 0;
-    protected ObjectPool<Projectile> bulletPool;
     protected float destroyTime;
     public Rigidbody2D rb;
-    [SerializeField] SpriteRenderer renderer;
+    [SerializeField] SpriteRenderer mySpriteReneder;
 
-    public virtual void Launch(Weapon weapon, ObjectPool<Projectile> bulletPool, Color color)
+    public virtual void Launch(Weapon weapon, Color color)
     {
         penetration = weapon.penetration;
         transform.localScale = Vector3.one * weapon.size;
         this.weapon = weapon;
         gameObject.layer = weapon.GetProjectileLayer();
         destroyTime = Time.time + weapon.duration;
-        this.bulletPool = bulletPool;
-        renderer.color = color;
+        mySpriteReneder.color = color;
     }
 
     private void Update()
@@ -52,6 +49,6 @@ public class Projectile : MonoBehaviour
 
     void DestroyObject()
     {
-        bulletPool.Release(this);
+        PoolManager.Release(this);
     }
 }

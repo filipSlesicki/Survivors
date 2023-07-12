@@ -5,9 +5,6 @@ using UnityEngine;
 [CreateAssetMenu]
 public class RandomEnemyChance : ScriptableObject
 {
-    //public List<GameObject> items = new List<GameObject>();
-    //public List<float> dropChance = new List<float>();
-    [HideInInspector]
     public List<EnemyChance> enemies = new List<EnemyChance>();
     public Color[] colors = new Color[] { Color.red, Color.blue, Color.green, Color.yellow };
 

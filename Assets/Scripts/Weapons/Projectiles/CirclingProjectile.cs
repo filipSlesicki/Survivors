@@ -7,9 +7,9 @@ public class CirclingProjectile : Projectile
 {
     float angle;
 
-    public override void Launch(Weapon weapon, ObjectPool<Projectile> bulletPool,Color color)
+    public override void Launch(Weapon weapon, Color color)
     {
-        base.Launch(weapon, bulletPool, color);
+        base.Launch(weapon, color);
         Vector3 toOwner = transform.position - weapon.transform.position;
         angle = Vector3.SignedAngle(toOwner, Vector3.right, Vector3.forward);
     }

@@ -249,6 +249,7 @@ public class RandomChanceInspector : Editor
         {
             owner.enemies[right.index].dropChance = right.PercentageChance;
         }
+
     }
 }
 

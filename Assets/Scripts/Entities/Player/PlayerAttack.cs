@@ -16,13 +16,6 @@ public class PlayerAttack : MonoBehaviour
         }    
         foreach (var weapon in PlayerSkills.Instance.weapons.Values)
         {
-            //if(target)
-            //{
-            //    if(weapon.aimAtClosest)
-            //    { 
-            //        weapon.AimWeapon(target.movement.lastPosition);
-            //    }    
-            //}
             weapon.Tick();
         }
     }

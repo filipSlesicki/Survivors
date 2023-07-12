@@ -1246,12 +1246,12 @@ GameObject:
   - component: {fileID: 412375484}
   - component: {fileID: 412375483}
   m_Layer: 5
-  m_Name: Button
+  m_Name: RestartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &412375482
 RectTransform:
   m_ObjectHideFlags: 0

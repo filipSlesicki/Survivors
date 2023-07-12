@@ -10,17 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ced9fea5978b15444981ae50e2fb7bee, type: 3}
-  m_Name: RandomEnemyChance
+  m_Name: New Random Enemy Chance
   m_EditorClassIdentifier: 
-  enmies:
+  enemies:
   - enemy: {fileID: 8721016643645820127, guid: 4613bede9533d1749932f4e3a960e3d3, type: 3}
-    dropChance: 0.74595845
+    dropChance: 0.68591225
   - enemy: {fileID: 4715264460184889288, guid: 27d01fdc1f715f143b63a21068e75ff6, type: 3}
-    dropChance: 0.18013857
-  - enemy: {fileID: 2604343143765257919, guid: f3429c4c3dee1d644b6e595f431aaccb, type: 3}
-    dropChance: 0.07390314
+    dropChance: 0.31408775
   colors:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0, g: 0, b: 1, a: 1}
-  - {r: 0.49056602, g: 0.06616152, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
   - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}

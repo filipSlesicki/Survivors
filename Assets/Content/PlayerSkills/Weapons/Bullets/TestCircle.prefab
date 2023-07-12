@@ -162,4 +162,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: -8094956694680500416}
-  renderer: {fileID: 5267732496060629021}
+  mySpriteReneder: {fileID: 5267732496060629021}
