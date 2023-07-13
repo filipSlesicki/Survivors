@@ -17,8 +17,56 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 1b6084e96d099b044b578687843f9166
   m_SerializeEntries:
-  - m_GUID: e4bf9765c8e22ae479b93ddd176fa87b
-    m_Address: Assets/Content/Skills
+  - m_GUID: 1ebafe1bcdf83db49b99302875e2b094
+    m_Address: Assets/Prefabs/Weapons/Sniper/Sniper.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - skills
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6025607fcd903ab4faab69169ee946bb
+    m_Address: Assets/Prefabs/Weapons/SpinningLaser/SpinningLaser.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - skills
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b6ca2bd53ae310b46b0e116f05cfdc1b
+    m_Address: Assets/Prefabs/Weapons/BigLaser/BigLaser.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - skills
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 22924d87fa90d4e438a9e548b27281ec
+    m_Address: Assets/Prefabs/Weapons/CirclingBullets/CirclingBullets.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - skills
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 755e5fba9871d4a409312aa3416219f3
+    m_Address: Assets/Prefabs/Weapons/BasicGun/Basic Gun.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - skills
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 66899811cd96f514ca135d3234afe9a7
+    m_Address: Assets/Prefabs/Weapons/Shotgun/Shotgun.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - skills
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 305c4d393a8bd3741bdf078a332eb02d
+    m_Address: Assets/ScriptableObjects/PassiveSkills/Cooldown Boost.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - skills
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0f3a75fdea94e79489c3603367351ecf
+    m_Address: Assets/ScriptableObjects/PassiveSkills/Speed Boost.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - skills
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: acb7f3e97dee5314bb289a6ae0bd7fae
+    m_Address: Assets/ScriptableObjects/PassiveSkills/Health Boost.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - skills

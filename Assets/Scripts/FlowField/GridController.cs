@@ -100,7 +100,6 @@ public class GridController : MonoBehaviour
 	/// </summary>
 	void UpdateSectorChange()
     {
-
 		Cell sectorCell = sectorGrid.GetCellFromWorldPos(target.trans.position);
 
 		if (target.lastSectorIndex != sectorCell.flatIndex && !changedSector)
@@ -111,11 +110,12 @@ public class GridController : MonoBehaviour
 			SetPathsToSector(playerSector.index);
 			for (int i = 0; i < sectors.Length; i++)
 			{
+				//Current sector is updated in UpdateCellChange
 				if (i == sectorCell.flatIndex)
 				{
 					continue;
 				}
-				//sectors[i].CalculateFlowToPortalImmediately(sectorGrid.cells[i].bestDirectionIndex);
+				//Dont update sectors that can't reach target
 				if(sectorGrid.cells[i].bestDirectionIndex == -1)
                 {
 					continue;
@@ -135,11 +135,6 @@ public class GridController : MonoBehaviour
 		if (target.lastGridIndex != currentTargetPos && !changedCell)
 		{
 			target.lastGridIndex = currentTargetPos;
-			//if (changedCell)
-			//{
-			//	Debug.Log("still running last update");
-			//	return;
-			//}
 			changedCell = true;
 			currentSectorHandle = playerSector.flowField.CalculateFlowFieldToTarget(targetCell);
 			JobHandle.ScheduleBatchedJobs();
@@ -195,59 +190,7 @@ public class GridController : MonoBehaviour
 		
 		}
 	}
-
-	/// <summary>
-	/// Place portals between sectors
-	/// </summary>
-	void PlacePortals()
-    {
-		//TODO: Multiple portals in each direction
-		int sectorCount = sectors.Length;
-		//reusable edge cells buffers
-		Cell[] currentEdgeCells = new Cell[sectorSize]; 
-		Cell[] neighbourEdgeCells = new Cell[sectorSize];
-
-		for (int sectorIndex = 0; sectorIndex < sectorCount; sectorIndex++)
-        {
-			Sector currentSector = sectors[sectorIndex];
-			int2 sectorGridPos = sectorGrid.cells[sectorIndex].gridIndex;
-
-			//Add portals in every cardinal direction
-			//TODO: Add portals in diagonal directions
-            for (int directionIndex = 0; directionIndex < 4; directionIndex++)
-            {
-				//Find neighbour sector in direction
-				int neighbourSectorIndex = sectorGrid.GetCellInDirection(sectorGridPos, Directions.directions[directionIndex]);
-				if (neighbourSectorIndex == -1)
-					continue;
-
-				Sector neighbourSector = sectors[neighbourSectorIndex];
-				//Get all edge cells for current and neighbour sectors and save them to buffers
-				currentSector.grid.GetEdgeCells(directionIndex, currentEdgeCells);
-				neighbourSector.grid.GetEdgeCells(Directions.GetOppositeDirection(directionIndex), neighbourEdgeCells);
-
-
-				List<Cell> portalCells = new List<Cell>();
-				SectorPortal portal = null;
-				for (int i = 0; i < sectorSize; i++)
-				{
-					//Check if both sides are walkable
-					if (currentEdgeCells[i].cost != 255 && neighbourEdgeCells[i].cost != 255)
-					{
-						portalCells.Add(currentEdgeCells[i]);
-					}
-				}
-				//If there's at least one walkable cell, create portal
-				if (portalCells.Count > 0)
-				{
-					portal = new SectorPortal(currentSector.index, neighbourSector.index, portalCells);
-				}
-				currentSector.portalCells[directionIndex] = portal;
-				portalCells.Clear();
-			}
-
-        }
-    }
+	
 	/// <summary>
 	/// Gets cell from world position
 	/// </summary>
@@ -266,6 +209,9 @@ public class GridController : MonoBehaviour
 
 	}
 
+	/// <summary>
+	/// Queue used in <see cref="SetPathsToSector(int)"/>
+	/// </summary>
 	Queue<Cell> queue = new Queue<Cell>(50);
 	/// <summary>
 	/// Sets sector directions to go to target sector
@@ -310,6 +256,59 @@ public class GridController : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Place portals between sectors
+	/// </summary>
+	void PlacePortals()
+	{
+		//TODO: Multiple portals in each direction
+		int sectorCount = sectors.Length;
+		//reusable edge cells buffers
+		Cell[] currentEdgeCells = new Cell[sectorSize];
+		Cell[] neighbourEdgeCells = new Cell[sectorSize];
+
+		for (int sectorIndex = 0; sectorIndex < sectorCount; sectorIndex++)
+		{
+			Sector currentSector = sectors[sectorIndex];
+			int2 sectorGridPos = sectorGrid.cells[sectorIndex].gridIndex;
+
+			//Add portals in every cardinal direction
+			//TODO: Add portals in diagonal directions
+			for (int directionIndex = 0; directionIndex < 4; directionIndex++)
+			{
+				//Find neighbour sector in direction
+				int neighbourSectorIndex = sectorGrid.GetCellInDirection(sectorGridPos, Directions.directions[directionIndex]);
+				if (neighbourSectorIndex == -1)
+					continue;
+
+				Sector neighbourSector = sectors[neighbourSectorIndex];
+				//Get all edge cells for current and neighbour sectors and save them to buffers
+				currentSector.grid.GetEdgeCells(directionIndex, currentEdgeCells);
+				neighbourSector.grid.GetEdgeCells(Directions.GetOppositeDirection(directionIndex), neighbourEdgeCells);
+
+
+				List<Cell> portalCells = new List<Cell>();
+				SectorPortal portal = null;
+				for (int i = 0; i < sectorSize; i++)
+				{
+					//Check if both sides are walkable
+					if (currentEdgeCells[i].cost != 255 && neighbourEdgeCells[i].cost != 255)
+					{
+						portalCells.Add(currentEdgeCells[i]);
+					}
+				}
+				//If there's at least one walkable cell, create portal
+				if (portalCells.Count > 0)
+				{
+					portal = new SectorPortal(currentSector.index, neighbourSector.index, portalCells);
+				}
+				currentSector.portalCells[directionIndex] = portal;
+				portalCells.Clear();
+			}
+
+		}
+	}
+
+	/// <summary>
 	/// Cleanup
 	/// </summary>
 	private void OnDisable()
@@ -326,7 +325,6 @@ public class GridController : MonoBehaviour
 		
 		}
 		jobHandlesDictionary.Clear();
-		//playerSector.flowField.OnDestroy();
         foreach (var sector in sectors)
         {
 			sector.flowField.OnDestroy();

@@ -61,8 +61,6 @@ public class FlowField
 	{
 		handle.Complete();
 		calculateFlowFieldJob.grid.CopyTo(grid.cells);
-		//this.grid.CopyFrom(calculateFlowFieldJob.grid);
-		//calculateFlowFieldJob.grid.Dispose();
 	}
 	public void FinishFlowfieldToPortalJob(JobHandle handle)
 	{

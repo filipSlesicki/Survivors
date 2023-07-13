@@ -643,10 +643,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridController: {fileID: 72817406}
-  displayGrid: 0
+  displayGrid: 1
   drawSectors: 1
   drawSubSectors: 0
-  curDisplayType: 0
+  curDisplayType: 6
   directionIconPrefab: {fileID: 8937837683069903099, guid: 0c1bfe7291f018447a05085519d98b9f, type: 3}
   directionArrows:
   - {fileID: 21300000, guid: 301fe569da9047c4988d46c1707ea4e5, type: 3}
@@ -2482,7 +2482,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1056822175}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.69, y: 14.46, z: 0}
+  m_LocalPosition: {x: 51, y: 32.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

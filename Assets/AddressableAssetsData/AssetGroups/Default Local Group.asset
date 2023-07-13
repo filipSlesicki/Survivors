@@ -16,7 +16,12 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 354ca4a1c65d0e94d98ddad7d293be57
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 070fdc37b231a6e4dbdea5128fdc3e68
+    m_Address: Assets/Prefabs/Enemies/EnemyWeapons/EnemyGun/EnemyGun.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cd205495d6c0e8544b0da706c0c89cb9, type: 2}
   m_SchemaSet:

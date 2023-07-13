@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c1661ced115d894085b16f394809699, type: 3}
   m_Name: TestProfile
   m_EditorClassIdentifier: 
-  spawnCount: 515
-  minDistanceToPlayer: 20
-  maxDistanceFromPlayer: 80
+  spawnCount: 30
+  minDistanceToPlayer: 10
+  maxDistanceFromPlayer: 20
   spawnTime: 1000
+  enemies: {fileID: 11400000, guid: 99624da52a076344b8a7d93733a9d933, type: 2}

@@ -13,7 +13,7 @@ public class Layers : ScriptableObject
     private void OnValidate()
     {
         
-        Player = playerLayer.value;
-        Enemy = enemyLayer.value;
+        Player = playerLayer;
+        Enemy = enemyLayer;
     }
 }
